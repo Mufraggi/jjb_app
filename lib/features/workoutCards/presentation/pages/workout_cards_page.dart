@@ -7,7 +7,7 @@ import '../../domain/repository/workout_card_repository.dart';
 import '../bloc/workout_cards_event_bloc.dart';
 import '../bloc/workout_cards_event_event.dart';
 import '../bloc/workout_cards_event_state.dart';
-import '../widgets/WorkoutCardWidget.dart';
+import '../widgets/tmp2.dart';
 
 class WorkoutCardsPage extends StatelessWidget {
   const WorkoutCardsPage({super.key});
@@ -28,7 +28,7 @@ class WorkoutCardsPage extends StatelessWidget {
               itemCount: state.cards.length,
               itemBuilder: (context, index) {
                 final card = state.cards[index];
-                return WorkoutCardWidget(card: card);
+                return CardFeedback(item: card, onPress: () { },);
               },
             );
           } else {
