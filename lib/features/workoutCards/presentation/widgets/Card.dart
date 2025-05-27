@@ -4,24 +4,19 @@ import 'package:intl/intl.dart';
 import 'package:jjb_app/domain/workout/workoutType.dart';
 
 import '../../domain/workoutCard.dart';
-import 'FeelingMeter.dart';
+import 'card/FeelingMeter.dart';
+import 'card/FocusOfTheDay.dart';
+import 'card/Header.dart';
 
 class CardFeedback extends StatelessWidget {
   final WorkoutCard item;
 
-  const CardFeedback({Key? key, required this.item})
-    : super(key: key);
+  const CardFeedback({Key? key, required this.item}) : super(key: key);
 
   // Fonction pour obtenir la couleur du texte selon la couleur de fond
-  Color _getTextColor(Color backgroundColor) {
-    return backgroundColor.computeLuminance() > 0.5
-        ? Colors.black
-        : Colors.white;
-  }
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat('MMMM d').format(item.date);
     final colorBadge = item.type.getTypeBorderColor();
     return GestureDetector(
       child: Container(
@@ -44,63 +39,12 @@ class CardFeedback extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header avec date et badge
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    formattedDate,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade700,
-                    ),
-                  ),
-                  // Badge personnalisé au lieu de Chip
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colorBadge,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: colorBadge.withOpacity(0.8),
-                        width: 1,
-                      ),
-                    ),
-                    child: Text(
-                      item.type.label,
-                      style: TextStyle(
-                        color: _getTextColor(colorBadge),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              CardHeader(item: item),
 
               const SizedBox(height: 12),
 
               // Focus du jour
-              if (item.focusOfTheDay != null) ...[
-                Text(
-                  'Focus',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey.shade800,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  item.focusOfTheDay!,
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                ),
-                const SizedBox(height: 12),
-              ],
-
+              FocusOfTheDay(item: item),
               // Durée et feeling
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
