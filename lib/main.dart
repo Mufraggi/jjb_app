@@ -4,11 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/workoutCards/data/repository/workout_card_repository_impl.dart';
 import 'features/workoutCards/domain/repository/workout_card_repository.dart';
 import 'features/workoutCards/domain/workoutCard.dart';
-import 'package:intl/intl.dart';
-
 import 'features/workoutCards/presentation/pages/workout_cards_page.dart';
-import 'features/workoutCards/presentation/widgets/tmp.dart';
-import 'features/workoutCards/presentation/widgets/tmp2.dart'; // pour formater la date
+import 'features/workoutCards/presentation/widgets/Card.dart'; // pour formater la date
 
 void main() {
   runApp(
@@ -42,7 +39,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class WorkoutCardsPage extends StatefulWidget {
+/*class WorkoutCardsPage extends StatefulWidget {
   const WorkoutCardsPage({super.key});
 
   @override
@@ -92,3 +89,4 @@ class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
     );
   }
 }
+*/

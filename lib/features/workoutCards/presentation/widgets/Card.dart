@@ -8,51 +8,28 @@ import 'FeelingMeter.dart';
 
 class CardFeedback extends StatelessWidget {
   final WorkoutCard item;
-  final VoidCallback onPress;
-  final bool selected;
 
-  const CardFeedback({
-    Key? key,
-    required this.item,
-    required this.onPress,
-    this.selected = false,
-  }) : super(key: key);
-
-  Color _getTypeBorderColor(String type) {
-    switch (type) {
-      case "JJB GI":
-        return Colors.purple.shade500;
-      case "JJB NO GI":
-        return Colors.blue.shade500;
-      case "GRAPPLING":
-        return Colors.orange.shade500;
-      default:
-        return Colors.grey.shade500;
-    }
-  }
+  const CardFeedback({Key? key, required this.item})
+    : super(key: key);
 
   // Fonction pour obtenir la couleur du texte selon la couleur de fond
   Color _getTextColor(Color backgroundColor) {
-    return backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+    return backgroundColor.computeLuminance() > 0.5
+        ? Colors.black
+        : Colors.white;
   }
 
   @override
   Widget build(BuildContext context) {
     final formattedDate = DateFormat('MMMM d').format(item.date);
-    final colorBadge = _getTypeBorderColor(item.type.label);
+    final colorBadge = item.type.getTypeBorderColor();
     return GestureDetector(
-      onTap: onPress,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
-          color: selected ? Colors.purple.shade50 : Colors.white,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border(
-            left: BorderSide(
-              color: _getTypeBorderColor(item.type.name),
-              width: 4,
-            ),
-          ),
+          border: Border(left: BorderSide(color: colorBadge, width: 4)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.1),
@@ -81,7 +58,10 @@ class CardFeedback extends StatelessWidget {
                   ),
                   // Badge personnalisé au lieu de Chip
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: colorBadge,
                       borderRadius: BorderRadius.circular(16),
