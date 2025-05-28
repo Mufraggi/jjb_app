@@ -3,33 +3,28 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/workoutCard.dart';
 
-class FocusOfTheDay extends StatelessWidget {
+class ShortNote extends StatelessWidget {
   final WorkoutCard item;
 
-  const FocusOfTheDay({Key? key, required this.item}) : super(key: key);
+  const ShortNote({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (item.focusOfTheDay == null || item.focusOfTheDay!.isEmpty) {
       return const SizedBox.shrink(); // Ne rien afficher
     }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 8),
         Text(
-          'Focus',
+          '📝 ${item.shortNote}',
           style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Colors.grey.shade800,
+            fontSize: 14,
+            color: Colors.grey.shade600,
+            fontStyle: FontStyle.italic,
           ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          item.focusOfTheDay!,
-          style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
-        ),
-        const SizedBox(height: 8),
       ],
     );
   }
