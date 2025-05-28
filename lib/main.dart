@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'features/workoutCards/data/repository/workout_card_repository_impl.dart';
 import 'features/workoutCards/domain/repository/workout_card_repository.dart';
 import 'features/workoutCards/domain/workoutCard.dart';
-import 'package:intl/intl.dart'; // pour formater la date
+import 'features/workoutCards/presentation/pages/workout_cards_page.dart';
+import 'features/workoutCards/presentation/widgets/Card.dart'; // pour formater la date
 
 void main() {
   runApp(
@@ -17,20 +18,36 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Workout Cards Demo',
+      title: 'Flutter App!!',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorSchemeSeed: Colors.indigo,
+        useMaterial3: true,
+        brightness: Brightness.light,
       ),
-      home: const WorkoutCardsPage(),
+      darkTheme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        useMaterial3: true,
+        brightness: Brightness.dark,
+      ),
+      home: WorkoutCardsPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class WorkoutCardsPage extends StatelessWidget {
+/*class WorkoutCardsPage extends StatefulWidget {
   const WorkoutCardsPage({super.key});
+
+  @override
+  State<WorkoutCardsPage> createState() => _WorkoutCardsPageState();
+}
+
+class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
+  int? selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +68,20 @@ class WorkoutCardsPage extends StatelessWidget {
 
           final cards = snapshot.data!;
           return ListView.builder(
+            padding: const EdgeInsets.all(8),
             itemCount: cards.length,
             itemBuilder: (context, index) {
               final card = cards[index];
-              return WorkoutCardWidget(card: card);
+              return CardFeedback(
+                item: card,
+                selected: selectedIndex == index,
+                onPress: () {
+                  setState(() {
+                    selectedIndex = selectedIndex == index ? null : index;
+                  });
+                  print('Card ${index} pressed: ${cards[index].type}');
+                },
+              );
             },
           );
         },
@@ -62,42 +89,4 @@ class WorkoutCardsPage extends StatelessWidget {
     );
   }
 }
-
-class WorkoutCardWidget extends StatelessWidget {
-  final WorkoutCard card;
-  const WorkoutCardWidget({super.key, required this.card});
-
-  @override
-  Widget build(BuildContext context) {
-    final dateFormatted = DateFormat('MMMM d').format(card.date);
-
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(dateFormatted,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 4),
-            Text('Type: ${card.type.name}'),
-            Text('Focus: ${card.focusOfTheDay}'),
-            Text('Durée: ${card.duration.inMinutes} min'),
-            Text('Feeling: ${card.feeling.value}/10'),
-            if (card.shortNote!.isEmpty) ...[
-              const SizedBox(height: 8),
-              Text('Note: ${card.shortNote}', style: const TextStyle(fontStyle: FontStyle.italic)),
-            ],
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 6,
-              children: card.tags.map((tag) => Chip(label: Text(tag))).toList(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+*/

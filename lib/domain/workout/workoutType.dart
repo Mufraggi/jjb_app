@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum WorkoutType { jjbGi, jjbNoGi, grappling }
 
 extension WorkoutTypeExtension on WorkoutType {
@@ -22,6 +24,18 @@ extension WorkoutTypeExtension on WorkoutType {
         return WorkoutType.grappling;
       default:
         throw ArgumentError('Invalid workout type label: $label');
+    }
+  }
+  Color getTypeBorderColor() {
+    switch (this.label) {
+      case "JJB GI":
+        return Colors.purple.shade500;
+      case "JJB NO GI":
+        return Colors.blue.shade500;
+      case "GRAPPLING":
+        return Colors.orange.shade500;
+      default:
+        return Colors.grey.shade500;
     }
   }
 }
