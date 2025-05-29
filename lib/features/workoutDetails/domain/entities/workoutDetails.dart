@@ -3,9 +3,9 @@ import 'package:jjb_app/core/domain/ratingOnTen.dart';
 import 'package:jjb_app/domain/workout/sparingRound.dart';
 import 'package:jjb_app/core/domain/trainingDuration.dart';
 import 'package:jjb_app/core/domain/workoutId.brand.dart';
-import 'workoutType.dart';
+import '../../../../domain/workout/workoutType.dart';
 
-class Workout extends Equatable {
+class WorkoutDetails extends Equatable {
   final WorkoutId id;
   final WorkoutType type;
   final DateTime date;
@@ -22,7 +22,7 @@ class Workout extends Equatable {
   final List<SparringRound>? sparringRounds;
   final String? notes;
 
-  const Workout({
+  const WorkoutDetails({
     required this.id,
     required this.type,
     required this.date,
@@ -41,23 +41,24 @@ class Workout extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    id,
-    type,
-    date,
-    duration,
-    tags,
-    feeling,
-    energyLevel,
-    motivationLevel,
-    stressLevel,
-    sleepQuality,
-    injuries,
-    focusOfTheDay,
-    achievedGoal,
-    sparringRounds,
-    notes,
-  ];
+  List<Object?> get props =>
+      [
+        id,
+        type,
+        date,
+        duration,
+        tags,
+        feeling,
+        energyLevel,
+        motivationLevel,
+        stressLevel,
+        sleepQuality,
+        injuries,
+        focusOfTheDay,
+        achievedGoal,
+        sparringRounds,
+        notes,
+      ];
 }
 
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/domain/workoutId.brand.dart';
+import '../../../workoutDetails/presentation/pages/workout_details_bottom_sheet.dart';
 import '../../applications/GetWorkoutCards.dart';
 import '../../domain/repository/workout_card_repository.dart';
 import '../bloc/workout_cards_event_bloc.dart';
@@ -33,12 +35,17 @@ class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
     super.dispose();
   }
 
+  void _openButtonSheet(WorkoutId id) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => WorkoutDetailsBottomSheet(id: id),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Workout Cards'),
-      ),
+      appBar: AppBar(title: const Text('Workout Cards')),
       body: BlocProvider.value(
         value: _bloc,
         child: BlocBuilder<WorkoutCardsBloc, WorkoutCardsState>(
@@ -53,12 +60,9 @@ class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
                 itemBuilder: (context, index) {
                   final card = cards[index];
                   return InkWell(
-                      onTap: () {
-                        print('Card $index pressed: ${card.type}');
-                      },
-                      child: CardFeedback(
-                        item: card,
-                      ));
+                    onTap: () => this._openButtonSheet(card.id),
+                    child: CardFeedback(item: card),
+                  );
                 },
               );
             } else {

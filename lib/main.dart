@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jjb_app/features/workoutDetails/domain/repository/workout_details_repository.dart';
 
 import 'features/workoutCards/data/repository/workout_card_repository_impl.dart';
 import 'features/workoutCards/domain/repository/workout_card_repository.dart';
 import 'features/workoutCards/domain/workoutCard.dart';
 import 'features/workoutCards/presentation/pages/workout_cards_page.dart';
-import 'features/workoutCards/presentation/widgets/Card.dart'; // pour formater la date
+import 'features/workoutCards/presentation/widgets/Card.dart';
+import 'features/workoutDetails/data/repository/workout_details_repository_impl.dart'; // pour formater la date
 
 void main() {
   runApp(
-    RepositoryProvider<WorkoutCardRepository>(
-      create: (_) => WorkoutCardRepositoryInMemoryImpl(),
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<WorkoutCardRepository>(
+          create: (_) => WorkoutCardRepositoryInMemoryImpl(),
+        ),
+        RepositoryProvider<WorkoutRepository>(
+          create: (_) => WorkoutRepositoryInMemoryImpl(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );

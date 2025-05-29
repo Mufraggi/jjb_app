@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import '../../../core/domain/ratingOnTen.dart';
 import '../../../core/domain/trainingDuration.dart';
 import '../../../core/domain/workoutId.brand.dart';
-import '../../../domain/workout/workout.dart';
 import '../../../domain/workout/workoutType.dart';
 
 class WorkoutCard extends Equatable {
@@ -38,21 +37,4 @@ class WorkoutCard extends Equatable {
     tags,
     shortNote,
   ];
-
-  factory WorkoutCard.fromWorkout(Workout workout) {
-    return WorkoutCard(
-      id: workout.id,
-      date: workout.date,
-      type: workout.type,
-      feeling: workout.feeling,
-      focusOfTheDay: workout.focusOfTheDay,
-      duration: workout.duration,
-      tags: workout.tags,
-      shortNote: workout.notes != null
-          ? (workout.notes!.length > 100
-                ? '${workout.notes!.substring(0, 100)}...'
-                : workout.notes)
-          : null,
-    );
-  }
 }
