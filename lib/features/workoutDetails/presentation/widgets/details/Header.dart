@@ -1,33 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:jjb_app/domain/workout/workoutType.dart';
 
+import '../../../../../core/domain/trainingDuration.dart';
 import '../../../../../widgets/Badge.dart';
-import '../../../domain/workoutCard.dart';
 
-class CardHeader extends StatelessWidget {
-  final WorkoutCard item;
+class HeaderDetails extends StatelessWidget {
+  final WorkoutType type;
+  final TrainingDuration duration;
 
-  const CardHeader({Key? key, required this.item}) : super(key: key);
+  const HeaderDetails({Key? key, required this.type, required this.duration})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat('MMMM d').format(item.date);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        WorkoutBadge(type: this.type),
         Text(
-          formattedDate,
+          this.duration.formatted,
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: Colors.grey.shade700,
           ),
         ),
-        // Badge personnalisé au lieu de Chip
-        WorkoutBadge(type: this.item.type),
       ],
     );
   }

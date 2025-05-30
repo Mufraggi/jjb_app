@@ -39,26 +39,21 @@ class _WorkoutDetailsBottomSheet extends State<WorkoutDetailsBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Workout Cards')),
-      body: BlocProvider.value(
+    return Container(
+      width: double.infinity,
+      child: BlocProvider.value(
         value: _bloc,
         child: BlocBuilder<WorkoutDetailsBloc, WorkoutDetailsState>(
           builder: (context, state) {
             if (state is WorkoutDetailsLoadInProgress) {
-              return const Center(child: CircularProgressIndicator());
+              return Container(
+                width: double.infinity,
+                height: 50,
+                child: const Center(child: CircularProgressIndicator()),
+              );
             } else if (state is WorkoutDetailsLoadSuccess) {
               final details = state.Details;
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  WorkoutDetailsView(details: details),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text("Fermer"),
-                  ),
-                ],
-              );
+              return WorkoutDetailsView(details: details);
             } else {
               return const Center(child: Text('Erreur ou aucune donnée'));
             }

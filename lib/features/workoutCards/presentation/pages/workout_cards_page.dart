@@ -31,13 +31,21 @@ class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
 
   @override
   void dispose() {
-    _bloc.close(); // très important pour éviter les fuites mémoire
+    _bloc.close();
     super.dispose();
   }
 
   void _openButtonSheet(WorkoutId id) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      isDismissible: true,
+      enableDrag: true,
+      showDragHandle: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
       builder: (ctx) => WorkoutDetailsBottomSheet(id: id),
     );
   }
