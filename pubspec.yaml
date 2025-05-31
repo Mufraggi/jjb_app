@@ -42,12 +42,7 @@ dependencies:
   dio: ^5.4.0
   uuid: ^4.4.2
   intl: ^0.20.2
-
-
-
-
-
-
+  percent_indicator: ^4.2.5
 
 dev_dependencies:
   flutter_test:

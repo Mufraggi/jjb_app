@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jjb_app/features/workoutDetails/presentation/widgets/details/Feeling.dart';
 
 import '../../domain/entities/workoutDetails.dart';
 import 'details/ArchiveGoal.dart';
@@ -56,6 +57,12 @@ class WorkoutDetailsView extends StatelessWidget {
             endIndent: 0,
             color: Colors.grey,
           ),
+          Feeling(
+            feeling: this.details.feeling,
+            energyLevel: this.details.energyLevel,
+            motivationLevel: this.details.motivationLevel,
+            stressLevel: this.details.stressLevel,
+            sleepQuality: this.details.sleepQuality,)
         ],
       ),
     );

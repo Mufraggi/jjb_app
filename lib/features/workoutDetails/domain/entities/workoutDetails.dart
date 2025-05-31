@@ -12,10 +12,10 @@ class WorkoutDetails extends Equatable {
   final TrainingDuration duration;
   final List<String> tags;
   final RatingOnTen feeling;
-  final RatingOnTen? energyLevel;
-  final RatingOnTen? motivationLevel;
-  final RatingOnTen? stressLevel;
-  final RatingOnTen? sleepQuality;
+  final RatingOnTen energyLevel;
+  final RatingOnTen motivationLevel;
+  final RatingOnTen stressLevel;
+  final RatingOnTen sleepQuality;
   final List<String>? injuries;
   final String? focusOfTheDay;
   final bool? achievedGoal;
@@ -29,10 +29,10 @@ class WorkoutDetails extends Equatable {
     required this.duration,
     required this.tags,
     required this.feeling,
-    this.energyLevel,
-    this.motivationLevel,
-    this.stressLevel,
-    this.sleepQuality,
+    required this.energyLevel,
+    required this.motivationLevel,
+    required this.stressLevel,
+    required this.sleepQuality,
     this.injuries,
     this.focusOfTheDay,
     this.achievedGoal,
@@ -41,24 +41,21 @@ class WorkoutDetails extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
-        id,
-        type,
-        date,
-        duration,
-        tags,
-        feeling,
-        energyLevel,
-        motivationLevel,
-        stressLevel,
-        sleepQuality,
-        injuries,
-        focusOfTheDay,
-        achievedGoal,
-        sparringRounds,
-        notes,
-      ];
+  List<Object?> get props => [
+    id,
+    type,
+    date,
+    duration,
+    tags,
+    feeling,
+    energyLevel,
+    motivationLevel,
+    stressLevel,
+    sleepQuality,
+    injuries,
+    focusOfTheDay,
+    achievedGoal,
+    sparringRounds,
+    notes,
+  ];
 }
-
-
