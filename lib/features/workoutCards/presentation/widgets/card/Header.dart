@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jjb_app/domain/workout/workoutType.dart';
 
 import '../../../../../widgets/Badge.dart';
 import '../../../domain/workoutCard.dart';

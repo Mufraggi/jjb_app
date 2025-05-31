@@ -42,7 +42,7 @@ extension WorkoutTypeExtension on RatingType {
       case 'Motivation':
         return Colors.yellowAccent;
       case 'Stress':
-        return Colors.redAccent;;
+        return Colors.redAccent;
       case 'Sleep quality':
         return Colors.purpleAccent;
       default:

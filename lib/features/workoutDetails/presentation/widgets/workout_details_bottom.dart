@@ -2,12 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jjb_app/features/workoutDetails/presentation/widgets/details/Feeling.dart';
-
 import '../../domain/entities/workoutDetails.dart';
-import 'details/ArchiveGoal.dart';
 import 'details/Header.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
 import 'details/WorkoutGoalAndNotes.dart';
 
 class WorkoutDetailsView extends StatelessWidget {

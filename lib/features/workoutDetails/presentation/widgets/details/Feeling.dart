@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jjb_app/core/domain/RatingType.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../../../core/domain/ratingOnTen.dart';
 import 'CirculareFeeling.dart';
