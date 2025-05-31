@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jjb_app/features/workoutDetails/domain/repository/workout_details_repository.dart';
+import 'InjectionContainer.dart';
+import 'core/db/fake/FakeWorkoutDetail.dart';
+import 'core/db/fake/GenerateInsertSQL.dart';
 import 'features/workoutCards/data/repository/workout_card_repository_impl.dart';
 import 'features/workoutCards/domain/repository/workout_card_repository.dart';
 import 'features/workoutCards/presentation/pages/workout_cards_page.dart';
@@ -9,7 +12,9 @@ import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  final fakeDetails = generateFakeWorkoutDetails(10); // par ex. 10 entrées
+  final sql = generateInsertSQL(fakeDetails);
+  setupServiceLocator();
   await initializeDateFormatting('fr_FR', null);
   runApp(
     MultiRepositoryProvider(
