@@ -3,36 +3,36 @@ import 'package:jjb_app/core/domain/ratingOnTen.dart';
 import 'package:jjb_app/domain/workout/sparingRound.dart';
 import 'package:jjb_app/core/domain/trainingDuration.dart';
 import 'package:jjb_app/core/domain/workoutId.brand.dart';
-import 'workoutType.dart';
+import '../../../../domain/workout/workoutType.dart';
 
-class Workout extends Equatable {
+class WorkoutDetails extends Equatable {
   final WorkoutId id;
   final WorkoutType type;
   final DateTime date;
   final TrainingDuration duration;
   final List<String> tags;
   final RatingOnTen feeling;
-  final RatingOnTen? energyLevel;
-  final RatingOnTen? motivationLevel;
-  final RatingOnTen? stressLevel;
-  final RatingOnTen? sleepQuality;
+  final RatingOnTen energyLevel;
+  final RatingOnTen motivationLevel;
+  final RatingOnTen stressLevel;
+  final RatingOnTen sleepQuality;
   final List<String>? injuries;
   final String? focusOfTheDay;
   final bool? achievedGoal;
   final List<SparringRound>? sparringRounds;
   final String? notes;
 
-  const Workout({
+  const WorkoutDetails({
     required this.id,
     required this.type,
     required this.date,
     required this.duration,
     required this.tags,
     required this.feeling,
-    this.energyLevel,
-    this.motivationLevel,
-    this.stressLevel,
-    this.sleepQuality,
+    required this.energyLevel,
+    required this.motivationLevel,
+    required this.stressLevel,
+    required this.sleepQuality,
     this.injuries,
     this.focusOfTheDay,
     this.achievedGoal,
@@ -59,5 +59,3 @@ class Workout extends Equatable {
     notes,
   ];
 }
-
-

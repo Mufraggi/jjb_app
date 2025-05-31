@@ -17,35 +17,33 @@ class CardFeedback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorBadge = item.type.getTypeBorderColor();
-    return GestureDetector(
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border(left: BorderSide(color: colorBadge, width: 4)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: const Offset(0, 1),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CardHeader(item: item),
-              const SizedBox(height: 4),
-              FocusOfTheDay(item: item),
-              DurationWorkout(item: item),
-              ShortNote(item: item),
-              Tags(item: item),
-            ],
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border(left: BorderSide(color: colorBadge, width: 4)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: const Offset(0, 1),
           ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CardHeader(item: item),
+            const SizedBox(height: 4),
+            FocusOfTheDay(item: item),
+            DurationWorkout(item: item),
+            ShortNote(item: item),
+            Tags(item: item),
+          ],
         ),
       ),
     );
