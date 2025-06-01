@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/domain/RatingType.dart';
-import '../widgets/widgets/DateSelector.dart';
-import '../widgets/widgets/FeelingsSelector.dart';
-import '../widgets/widgets/TimePickerCard.dart';
+import 'package:jjb_app/domain/workout/TechnicCategory.dart';
+import '../../../../domain/workout/JbbTechnic.dart';
+import '../widgets/steps/Step1When.dart';
+import '../widgets/steps/Step2Feeling.dart';
+import '../widgets/steps/Step3Training.dart';
 
 class CreateWorkoutPage extends StatefulWidget {
   @override
@@ -20,11 +20,16 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   double _currentMotivationSliderValue = 5;
   double _currentStressSliderValue = 5;
   double _currentSleepQualitySliderValue = 5;
+  String firstDropdownValue = TechniqueCategory.takedowns.label;
+  String? secondDropdownValue;
+  List<bool> _selectedTrainingType = <bool>[true, false, false];
 
   bool get isFirstStep => _currentStep == 0;
 
   final _workoutNameController = TextEditingController();
   final _notesController = TextEditingController();
+  TechniqueCategory? selectedCategory;
+  String? selectedTechnique;
 
   bool get isLastStep => _currentStep == _buildSteps().length - 1;
 
@@ -41,36 +46,38 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
       width: double.infinity,
       child: Column(
         children: [
-          Stepper(
-            currentStep: _currentStep,
-            onStepTapped: (step) => setState(() => _currentStep = step),
-            onStepContinue: () {
-              if (isLastStep) {
-              } else {
-                setState(() => _currentStep += 1);
-              }
-            },
-            onStepCancel: isFirstStep
-                ? null
-                : () => setState(() => _currentStep -= 1),
-            //type: StepperType.horizontal,
-            controlsBuilder: (context, details) {
-              return Row(
-                children: [
-                  if (!isFirstStep)
-                    TextButton(
-                      onPressed: details.onStepCancel,
-                      child: Text('Précédent'),
+          Expanded(
+            child: Stepper(
+              currentStep: _currentStep,
+              onStepTapped: (step) => setState(() => _currentStep = step),
+              onStepContinue: () {
+                if (isLastStep) {
+                } else {
+                  setState(() => _currentStep += 1);
+                }
+              },
+              onStepCancel: isFirstStep
+                  ? null
+                  : () => setState(() => _currentStep -= 1),
+              //rrtype: StepperType.horizontal,
+              controlsBuilder: (context, details) {
+                return Row(
+                  children: [
+                    if (!isFirstStep)
+                      TextButton(
+                        onPressed: details.onStepCancel,
+                        child: Text('Précédent'),
+                      ),
+                    SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: details.onStepContinue,
+                      child: Text(isLastStep ? 'Créer' : 'Suivant'),
                     ),
-                  SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: details.onStepContinue,
-                    child: Text(isLastStep ? 'Créer' : 'Suivant'),
-                  ),
-                ],
-              );
-            },
-            steps: _buildSteps(),
+                  ],
+                );
+              },
+              steps: _buildSteps(),
+            ),
           ),
         ],
       ),
@@ -79,94 +86,75 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
 
   List<Step> _buildSteps() => [
     Step(
+      state: _currentStep > 0 ? StepState.complete : StepState.indexed,
       title: Text('Quand'),
-      content: Column(
-        children: [
-          Text(
-            'Sélectionnez la date et l\'heure de votre entraînement',
-            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-          ),
-          SizedBox(height: 20),
-          DatePickerCard(
-            selectedDate: selectedDate,
-            onDateChanged: (DateTime newDate) {
-              setState(() {
-                selectedDate = newDate;
-              });
-            },
-          ),
 
-          SizedBox(height: 16),
-          TimePickerCard(
-            selectedTime: selectedTime,
-            onTimeChanged: (TimeOfDay newTime) {
-              setState(() {
-                selectedTime = newTime;
-              });
-            },
-          ),
-        ],
+      content: Step1WhenContent(
+        selectedDate: selectedDate,
+        selectedTime: selectedTime,
+        onDateChanged: (newDate) {
+          setState(() {
+            selectedDate = newDate;
+          });
+        },
+        onTimeChanged: (newTime) {
+          setState(() {
+            selectedTime = newTime;
+          });
+        },
       ),
     ),
 
     Step(
+      state: _currentStep > 1 ? StepState.complete : StepState.indexed,
       isActive: _currentStep >= 1,
       title: Text('Feelings'),
-      content: SingleChildScrollView(
-        child: Column(
-          children: [
-            FeelingsSelector(
-              type: RatingType.feeling,
-              currentValue: _currentFeelingSliderValue,
-              onChanged: (value) {
-                setState(() {
-                  _currentFeelingSliderValue = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            FeelingsSelector(
-              type: RatingType.energyLevel,
-              currentValue: _currentEnergySliderValue,
-              onChanged: (value) {
-                setState(() {
-                  _currentEnergySliderValue = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            FeelingsSelector(
-              type: RatingType.motivationLevel,
-              currentValue: _currentMotivationSliderValue,
-              onChanged: (value) {
-                setState(() {
-                  _currentMotivationSliderValue = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            FeelingsSelector(
-              type: RatingType.stressLevel,
-              currentValue: _currentStressSliderValue,
-              onChanged: (value) {
-                setState(() {
-                  _currentStressSliderValue = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-            FeelingsSelector(
-              type: RatingType.sleepQuality,
-              currentValue: _currentSleepQualitySliderValue,
-              onChanged: (value) {
-                setState(() {
-                  _currentSleepQualitySliderValue = value;
-                });
-              },
-            ),
-            SizedBox(height: 10),
-          ],
-        ),
+      content: Step2FeelingsContent(
+        currentFeelingSliderValue: _currentFeelingSliderValue,
+        onFeelingChanged: (value) =>
+            setState(() => _currentFeelingSliderValue = value),
+        currentEnergySliderValue: _currentEnergySliderValue,
+        onEnergyChanged: (value) =>
+            setState(() => _currentEnergySliderValue = value),
+        currentMotivationSliderValue: _currentMotivationSliderValue,
+        onMotivationChanged: (value) =>
+            setState(() => _currentMotivationSliderValue = value),
+        currentStressSliderValue: _currentStressSliderValue,
+        onStressChanged: (value) =>
+            setState(() => _currentStressSliderValue = value),
+        currentSleepQualitySliderValue: _currentSleepQualitySliderValue,
+        onSleepQualityChanged: (value) =>
+            setState(() => _currentSleepQualitySliderValue = value),
+      ),
+    ),
+    Step(
+      state: _currentStep > 2 ? StepState.complete : StepState.indexed,
+      isActive: _currentStep >= 2,
+      title: const Text('Training'),
+      content: Step3TrainingContent(
+        selectedCategory: selectedCategory,
+        selectedTechnique: selectedTechnique,
+        techniqueMap: techniqueMap,
+        selectedWorkoutType: _selectedTrainingType,
+        // Assurez-vous que techniqueMap est accessible ici
+        onCategoryChanged: (newValue) {
+          setState(() {
+            selectedCategory = newValue;
+            selectedTechnique = null; // Réinitialiser la technique
+          });
+        },
+        onTechniqueChanged: (newValue) {
+          setState(() {
+            selectedTechnique = newValue;
+          });
+        },
+        onWorkoutTypeChanged: (int index) {
+          setState(() {
+            for (int i = 0; i < _selectedTrainingType.length; i++) {
+              _selectedTrainingType[i] = i == index;
+            }
+          });
+        },
       ),
     ),
   ];
