@@ -62,10 +62,14 @@ class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (ctx) => CreateWorkoutPage(),
+      builder: (ctx) => Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: CreateWorkoutPage(),
+      ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {

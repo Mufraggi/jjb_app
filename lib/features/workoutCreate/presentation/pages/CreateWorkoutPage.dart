@@ -44,42 +44,37 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: Column(
-        children: [
-          Expanded(
-            child: Stepper(
-              currentStep: _currentStep,
-              onStepTapped: (step) => setState(() => _currentStep = step),
-              onStepContinue: () {
-                if (isLastStep) {
-                } else {
-                  setState(() => _currentStep += 1);
-                }
-              },
-              onStepCancel: isFirstStep
-                  ? null
-                  : () => setState(() => _currentStep -= 1),
-              //rrtype: StepperType.horizontal,
-              controlsBuilder: (context, details) {
-                return Row(
-                  children: [
-                    if (!isFirstStep)
-                      TextButton(
-                        onPressed: details.onStepCancel,
-                        child: Text('Précédent'),
-                      ),
-                    SizedBox(width: 8),
-                    ElevatedButton(
-                      onPressed: details.onStepContinue,
-                      child: Text(isLastStep ? 'Créer' : 'Suivant'),
-                    ),
-                  ],
-                );
-              },
-              steps: _buildSteps(),
-            ),
-          ),
-        ],
+      child: Stepper(
+        currentStep: _currentStep,
+        onStepTapped: (step) => setState(() => _currentStep = step),
+        onStepContinue: () {
+          if (isLastStep) {
+          } else {
+            setState(() => _currentStep += 1);
+          }
+        },
+        onStepCancel: isFirstStep
+            ? null
+            : () => setState(() => _currentStep -= 1),
+
+        // type: StepperType.horizontal,
+        controlsBuilder: (context, details) {
+          return Row(
+            children: [
+              if (!isFirstStep)
+                TextButton(
+                  onPressed: details.onStepCancel,
+                  child: Text('Précédent'),
+                ),
+              SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: details.onStepContinue,
+                child: Text(isLastStep ? 'Créer' : 'Suivant'),
+              ),
+            ],
+          );
+        },
+        steps: _buildSteps(),
       ),
     );
   }
@@ -155,6 +150,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
             }
           });
         },
+        formKey: GlobalKey<FormState>(),
       ),
     ),
   ];

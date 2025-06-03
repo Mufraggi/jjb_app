@@ -18,6 +18,7 @@ class Step3TrainingContent extends StatelessWidget {
   techniqueMap; // Passez techniqueMap en paramètre
   final List<bool> selectedWorkoutType;
   final ValueChanged<int> onWorkoutTypeChanged; // nouvelle callback
+  final GlobalKey<FormState> formKey;
 
   const Step3TrainingContent({
     Key? key,
@@ -28,67 +29,99 @@ class Step3TrainingContent extends StatelessWidget {
     required this.techniqueMap,
     required this.selectedWorkoutType,
     required this.onWorkoutTypeChanged, // ajout ici
-    // Acceptez techniqueMap ici
+    required this.formKey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ToggleButtons(
-          direction: Axis.horizontal,
-          onPressed: onWorkoutTypeChanged,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          selectedBorderColor: Colors.red[700],
-          selectedColor: Colors.white,
-          fillColor: Colors.red[200],
-          color: Colors.red[400],
-          constraints: const BoxConstraints(minHeight: 40.0, minWidth: 80.0),
-          isSelected: selectedWorkoutType,
-          children: <Widget>[
-            Text(WorkoutType.grappling.label),
-            Text(WorkoutType.jjbGi.label),
-            Text(WorkoutType.jjbNoGi.label),
-          ],
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        DropdownButtonFormField<TechniqueCategory>(
-          isExpanded: true,
-          value: selectedCategory,
-          hint: const Text('Sélectionnez une catégorie'),
-          decoration: InputDecoration(border: OutlineInputBorder()),
-          onChanged: onCategoryChanged,
-          items: TechniqueCategory.values
-              .map<DropdownMenuItem<TechniqueCategory>>((
-                TechniqueCategory category,
-              ) {
-                return DropdownMenuItem<TechniqueCategory>(
-                  value: category,
-                  child: Text(category.shortName),
-                );
-              })
-              .toList(),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: <Widget>[
+              ToggleButtons(
+                direction: Axis.horizontal,
+                //onPressed: onWorkoutTypeChanged,
+                onPressed: (int index) {
+                  var a = formKey.currentState?.validate();
+                  print(a);
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                selectedBorderColor: Colors.red[700],
+                selectedColor: Colors.white,
+                fillColor: Colors.red[200],
+                color: Colors.red[400],
+                constraints: const BoxConstraints(minHeight: 40.0, minWidth: 80.0),
+                isSelected: selectedWorkoutType,
+                children: <Widget>[
+                  Text(WorkoutType.grappling.label),
+                  Text(WorkoutType.jjbGi.label),
+                  Text(WorkoutType.jjbNoGi.label),
+                ],
+              ),
+              DropdownButtonFormField<TechniqueCategory>(
+                validator: (data) {
+                  if (data != null) return null;
+                  return 'Veuillez sélectionner une catégorie';
+                },
+                isExpanded: true,
+                value: selectedCategory,
+                hint: const Text('Sélectionnez une catégorie'),
+                decoration: InputDecoration(border: OutlineInputBorder()),
+                onChanged: onCategoryChanged,
+                items: TechniqueCategory.values
+                    .map<DropdownMenuItem<TechniqueCategory>>((
+                      TechniqueCategory category,
+                    ) {
+                      return DropdownMenuItem<TechniqueCategory>(
+                        value: category,
+                        child: Text(category.shortName),
+                      );
+                    })
+                    .toList(),
+              ),
+              const SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                validator: (data) {
+                  if (data != null) return null;
+                  return 'Veuillez sélectionner une Technique';
+                },
+                isExpanded: true,
+                value: selectedTechnique,
+                hint: const Text('Sélectionnez une technique'),
+                decoration: InputDecoration(border: OutlineInputBorder()),
+                onChanged: selectedCategory == null ? null : onTechniqueChanged,
+                items:
+                    selectedCategory == null ||
+                        techniqueMap[selectedCategory!] == null
+                    ? []
+                    : techniqueMap[selectedCategory!]!
+                          .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          })
+                          .toList(),
+              ),
+              TextFormField(
+                focusNode: FocusNode(),
+                controller: TextEditingController(),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Veuillez entrer une valeur';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 20),
-        DropdownButtonFormField<String>(
-          isExpanded: true,
-          value: selectedTechnique,
-          hint: const Text('Sélectionnez une technique'),
-          decoration: InputDecoration(border: OutlineInputBorder()),
-          onChanged: selectedCategory == null ? null : onTechniqueChanged,
-          items:
-              selectedCategory == null ||
-                  techniqueMap[selectedCategory!] == null
-              ? []
-              : techniqueMap[selectedCategory!]!.map<DropdownMenuItem<String>>((
-                  String value,
-                ) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-        ),
-      ],
+      ),
     );
   }
 }

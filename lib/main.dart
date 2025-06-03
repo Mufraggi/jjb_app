@@ -32,17 +32,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.light,
       title: 'Flutter App!!',
       theme: ThemeData(
         colorSchemeSeed: Colors.indigo,
         useMaterial3: true,
         brightness: Brightness.light,
       ),
-      darkTheme: ThemeData(
+      /*darkTheme: ThemeData(
         colorSchemeSeed: Colors.blue,
         useMaterial3: true,
         brightness: Brightness.dark,
-      ),
+      ),*/
       home: WorkoutCardsPage(),
       debugShowCheckedModeBanner: false,
     );
