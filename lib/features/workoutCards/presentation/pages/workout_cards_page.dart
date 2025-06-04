@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/domain/workoutId.brand.dart';
-import '../../../workoutCreate/presentation/pages/CreateWorkoutPage.dart';
+import '../../../workoutCreate/presentation/pages/CreateWorkoutPageStep2.dart';
 import '../../../workoutDetails/presentation/pages/workout_details_bottom_sheet.dart';
 import '../../applications/GetWorkoutCards.dart';
 import '../../domain/repository/workout_card_repository.dart';
