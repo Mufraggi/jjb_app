@@ -1,30 +1,28 @@
+// create_workout_page.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jjb_app/domain/workout/TechnicCategory.dart';
 import '../../../../domain/workout/JbbTechnic.dart';
+import '../../domain/repositoy/CreateWorkoutRepository.dart';
+import '../bloc/create_workout_bloc.dart';
+import '../bloc/create_workout_event.dart';
+import '../bloc/create_workout_state.dart';
+import '../state/FeelingsStepState.dart';
+import '../state/TemporalDataStep1.dart';
+import '../state/TrainingStepState.dart';
 import '../state/WorkoutFormState.dart';
 import '../widgets/CreateWorkoutWidget.dart';
 
 class CreateWorkoutPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _CreateWorkoutPageState();
+  State createState() => _CreateWorkoutPageState();
 }
 
 class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
-  int _currentStep = 0;
-
-  // État global du formulaire
-  late WorkoutFormState _formState;
-
   // Contrôleurs de texte (inchangés)
   final _workoutNameController = TextEditingController();
   final _notesController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _formState = WorkoutFormState();
-  }
 
   @override
   void dispose() {
@@ -33,96 +31,102 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
     super.dispose();
   }
 
-  // Méthodes pour mettre à jour l'état de chaque étape
-  void _updateWhenStep({DateTime? selectedDate, TimeOfDay? selectedTime}) {
-    setState(() {
-      _formState = _formState.copyWith(
-        whenStep: _formState.whenStep.copyWith(
-          selectedDate: selectedDate,
-          selectedTime: selectedTime,
-        ),
-      );
-    });
-  }
-
-  void _updateFeelingsStep({
-    double? feeling,
-    double? energy,
-    double? motivation,
-    double? stress,
-    double? sleepQuality,
-  }) {
-    setState(() {
-      _formState = _formState.copyWith(
-        feelingsStep: _formState.feelingsStep.copyWith(
-          currentFeelingSliderValue: feeling,
-          currentEnergySliderValue: energy,
-          currentMotivationSliderValue: motivation,
-          currentStressSliderValue: stress,
-          currentSleepQualitySliderValue: sleepQuality,
-        ),
-      );
-    });
-  }
-
-  void _updateTrainingStep({
-    TechniqueCategory? category,
-    String? technique,
-    List<bool>? trainingType,
-  }) {
-    setState(() {
-      _formState = _formState.copyWith(
-        trainingStep: _formState.trainingStep.copyWith(
-          selectedCategory: category,
-          selectedTechnique: technique,
-          selectedTrainingType: trainingType,
-        ),
-      );
-    });
-  }
-
-  void _createWorkout() {
-    // Logique de création du workout avec toutes les données
-    print('Date: ${_formState.whenStep.selectedDate}');
-    print('Time: ${_formState.whenStep.selectedTime}');
-    print('Feeling: ${_formState.feelingsStep.currentFeelingSliderValue}');
-    print('Category: ${_formState.trainingStep.selectedCategory}');
-    // ... etc
-
-    // Ici vous pouvez appeler votre service/repository pour sauvegarder
-  }
-
-  void _goToNextStep() {
-    setState(() {
-      _currentStep += 1;
-    });
-  }
-
-  void _goToPreviousStep() {
-    setState(() {
-      _currentStep -= 1;
-    });
-  }
-
-  void _goToStep(int step) {
-    setState(() {
-      _currentStep = step;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-   return CreateWorkoutWidget(
-      currentStep: _currentStep,
-      formState: _formState,
-      techniqueMap: techniqueMap,
-      onStepCancel: _goToPreviousStep,
-      onStepContinue: _goToNextStep,
-      onStepTapped: _goToStep,
-      onWhenStepUpdate: _updateWhenStep,
-      onFeelingsStepUpdate: _updateFeelingsStep,
-      onTrainingStepUpdate: _updateTrainingStep,
-      onCreateWorkout: _createWorkout,
+    return BlocProvider(
+      create: (context) => WorkoutFormBloc(
+        repository: context.read<CreateWorkoutRepository>(),
+      ),
+      child: BlocConsumer<WorkoutFormBloc, WorkoutFormBlocState>(
+        listener: (context, state) {
+          // Gérer les messages de succès/erreur
+          if (state.status == WorkoutFormStatus.success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Workout créé avec succès!')),
+            );
+            Navigator.of(context).pop();
+          } else if (state.status == WorkoutFormStatus.failure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Erreur: ${state.errorMessage}')),
+            );
+          }
+        },
+        builder: (context, state) {
+          return CreateWorkoutWidget(
+            currentStep: state.currentStep,
+            // Créer un WorkoutFormState compatible avec votre widget existant
+            formState: _createCompatibleFormState(state),
+            techniqueMap: techniqueMap,
+            onStepCancel: () => context.read<WorkoutFormBloc>().add(PreviousStepEvent()),
+            onStepContinue: () => context.read<WorkoutFormBloc>().add(NextStepEvent()),
+            onStepTapped: (step) => context.read<WorkoutFormBloc>().add(GoToStepEvent(step)),
+            onWhenStepUpdate: ({DateTime? selectedDate, TimeOfDay? selectedTime}) {
+              context.read<WorkoutFormBloc>().add(UpdateWhenStepEvent(
+                selectedDate: selectedDate,
+                selectedTime: selectedTime,
+              ));
+            },
+            onFeelingsStepUpdate: ({
+              double? feeling,
+              double? energy,
+              double? motivation,
+              double? stress,
+              double? sleepQuality,
+            }) {
+              context.read<WorkoutFormBloc>().add(UpdateFeelingsStepEvent(
+                currentFeelingSliderValue: feeling,
+                currentEnergySliderValue: energy,
+                currentMotivationSliderValue: motivation,
+                currentStressSliderValue: stress,
+                currentSleepQualitySliderValue: sleepQuality,
+              ));
+            },
+            onTrainingStepUpdate: ({
+              TechniqueCategory? category,
+              String? technique,
+              List<bool>? trainingType,
+            }) {
+              context.read<WorkoutFormBloc>().add(UpdateTrainingStepEvent(
+                selectedCategory: category,
+                selectedTechnique: technique,
+                selectedTrainingType: trainingType,
+              ));
+            },
+            onCreateWorkout: () {
+              final bloc = context.read<WorkoutFormBloc>();
+              if (bloc.isFormValid()) {
+                bloc.add(SubmitWorkoutFormEvent());
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Veuillez remplir tous les champs requis')),
+                );
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  // Méthode pour créer un WorkoutFormState compatible avec votre widget existant
+  WorkoutFormState _createCompatibleFormState(WorkoutFormBlocState blocState) {
+    return WorkoutFormState(
+      whenStep: WhenStepState(
+        selectedDate: blocState.selectedDate,
+        selectedTime: blocState.selectedTime,
+      ),
+      feelingsStep: FeelingsStepState(
+        currentFeelingSliderValue: blocState.currentFeelingSliderValue,
+        currentEnergySliderValue: blocState.currentEnergySliderValue,
+        currentMotivationSliderValue: blocState.currentMotivationSliderValue,
+        currentStressSliderValue: blocState.currentStressSliderValue,
+        currentSleepQualitySliderValue: blocState.currentSleepQualitySliderValue,
+      ),
+      trainingStep: TrainingStepState(
+        selectedCategory: blocState.selectedCategory,
+        selectedTechnique: blocState.selectedTechnique,
+        selectedTrainingType: blocState.selectedTrainingType,
+      ),
     );
   }
 }

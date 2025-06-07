@@ -1,4 +1,137 @@
-part of 'create_workout_bloc.dart';
+// workout_form_event.dart
+import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
+import '../../../../domain/workout/TechnicCategory.dart';
 
-@immutable
-sealed class CreateWorkoutEvent {}
+abstract class WorkoutFormEvent extends Equatable {
+  const WorkoutFormEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+// Classe événement pour représenter toutes les données aplaties
+class WorkoutFormDataEvent extends WorkoutFormEvent {
+  // Données de WhenStep
+  final DateTime? selectedDate;
+  final TimeOfDay? selectedTime;
+
+  // Données de FeelingsStep
+  final double? currentFeelingSliderValue;
+  final double? currentEnergySliderValue;
+  final double? currentMotivationSliderValue;
+  final double? currentStressSliderValue;
+  final double? currentSleepQualitySliderValue;
+
+  // Données de TrainingStep
+  final TechniqueCategory? selectedCategory;
+  final String? selectedTechnique;
+  final List<bool>? selectedTrainingType;
+
+  const WorkoutFormDataEvent({
+    // WhenStep fields
+    this.selectedDate,
+    this.selectedTime,
+
+    // FeelingsStep fields
+    this.currentFeelingSliderValue,
+    this.currentEnergySliderValue,
+    this.currentMotivationSliderValue,
+    this.currentStressSliderValue,
+    this.currentSleepQualitySliderValue,
+
+    // TrainingStep fields
+    this.selectedCategory,
+    this.selectedTechnique,
+    this.selectedTrainingType,
+  });
+
+  @override
+  List<Object?> get props => [
+    selectedDate,
+    selectedTime,
+    currentFeelingSliderValue,
+    currentEnergySliderValue,
+    currentMotivationSliderValue,
+    currentStressSliderValue,
+    currentSleepQualitySliderValue,
+    selectedCategory,
+    selectedTechnique,
+    selectedTrainingType,
+  ];
+}
+
+// Événements pour la navigation entre les étapes
+class NextStepEvent extends WorkoutFormEvent {}
+
+class PreviousStepEvent extends WorkoutFormEvent {}
+
+class GoToStepEvent extends WorkoutFormEvent {
+  final int stepIndex;
+
+  const GoToStepEvent(this.stepIndex);
+
+  @override
+  List<Object> get props => [stepIndex];
+}
+
+// Événement pour soumettre le formulaire
+class SubmitWorkoutFormEvent extends WorkoutFormEvent {}
+
+// Événements spécifiques par étape (optionnels, pour plus de granularité)
+class UpdateWhenStepEvent extends WorkoutFormEvent {
+  final DateTime? selectedDate;
+  final TimeOfDay? selectedTime;
+
+  const UpdateWhenStepEvent({
+    this.selectedDate,
+    this.selectedTime,
+  });
+
+  @override
+  List<Object?> get props => [selectedDate, selectedTime];
+}
+
+class UpdateFeelingsStepEvent extends WorkoutFormEvent {
+  final double? currentFeelingSliderValue;
+  final double? currentEnergySliderValue;
+  final double? currentMotivationSliderValue;
+  final double? currentStressSliderValue;
+  final double? currentSleepQualitySliderValue;
+
+  const UpdateFeelingsStepEvent({
+    this.currentFeelingSliderValue,
+    this.currentEnergySliderValue,
+    this.currentMotivationSliderValue,
+    this.currentStressSliderValue,
+    this.currentSleepQualitySliderValue,
+  });
+
+  @override
+  List<Object?> get props => [
+    currentFeelingSliderValue,
+    currentEnergySliderValue,
+    currentMotivationSliderValue,
+    currentStressSliderValue,
+    currentSleepQualitySliderValue,
+  ];
+}
+
+class UpdateTrainingStepEvent extends WorkoutFormEvent {
+  final TechniqueCategory? selectedCategory;
+  final String? selectedTechnique;
+  final List<bool>? selectedTrainingType;
+
+  const UpdateTrainingStepEvent({
+    this.selectedCategory,
+    this.selectedTechnique,
+    required this.selectedTrainingType,
+  });
+
+  @override
+  List<Object?> get props => [
+    selectedCategory,
+    selectedTechnique,
+    selectedTrainingType,
+  ];
+}
