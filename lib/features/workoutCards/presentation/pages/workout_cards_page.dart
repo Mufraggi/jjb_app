@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/domain/workoutId.brand.dart';
+import '../../../workoutCreate/presentation/pages/CreateWorkoutPageStep2.dart';
 import '../../../workoutDetails/presentation/pages/workout_details_bottom_sheet.dart';
 import '../../applications/GetWorkoutCards.dart';
 import '../../domain/repository/workout_card_repository.dart';
@@ -50,6 +51,26 @@ class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
     );
   }
 
+  void _openButtonSheetCreateWorkout() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true,
+      enableDrag: true,
+      showDragHandle: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: CreateWorkoutPage(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +99,15 @@ class _WorkoutCardsPageState extends State<WorkoutCardsPage> {
             }
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Action à effectuer lorsque l'utilisateur appuie sur le bouton
+          this._openButtonSheetCreateWorkout();
+          // Tu peux ouvrir une modale, naviguer, etc.
+        },
+        child: const Icon(Icons.add),
+        tooltip: 'Ajouter un workout',
       ),
     );
   }

@@ -4,6 +4,8 @@ import 'package:jjb_app/features/workoutDetails/domain/repository/workout_detail
 import 'features/workoutCards/data/repository/workout_card_repository_impl.dart';
 import 'features/workoutCards/domain/repository/workout_card_repository.dart';
 import 'features/workoutCards/presentation/pages/workout_cards_page.dart';
+import 'features/workoutCreate/data/repository/CreateWorkoutRepositoryImpl.dart';
+import 'features/workoutCreate/domain/repositoy/CreateWorkoutRepository.dart';
 import 'features/workoutDetails/data/repository/workout_details_repository_impl.dart'; // pour formater la date
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -20,6 +22,9 @@ void main() async {
         RepositoryProvider<WorkoutRepository>(
           create: (_) => WorkoutRepositoryInMemoryImpl(),
         ),
+        RepositoryProvider<CreateWorkoutRepository>(
+          create: (_) => CreateWorkoutRepositoryInMemoryImpl(),
+        )
       ],
       child: const MyApp(),
     ),
@@ -32,17 +37,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.light,
       title: 'Flutter App!!',
       theme: ThemeData(
         colorSchemeSeed: Colors.indigo,
         useMaterial3: true,
         brightness: Brightness.light,
       ),
-      darkTheme: ThemeData(
+      /*darkTheme: ThemeData(
         colorSchemeSeed: Colors.blue,
         useMaterial3: true,
         brightness: Brightness.dark,
-      ),
+      ),*/
       home: WorkoutCardsPage(),
       debugShowCheckedModeBanner: false,
     );
