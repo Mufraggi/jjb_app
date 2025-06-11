@@ -14,7 +14,7 @@ class WorkoutCardRepositoryInMemoryImpl implements WorkoutCardRepository {
 
     return [
       WorkoutCard(
-        id: WorkoutId(Uuid()),
+        id: WorkoutId(Uuid().toString()),
         date: DateTime.now().subtract(const Duration(days: 1)),
         type: WorkoutType.jjbGi,
         feeling: RatingOnTen(7),
@@ -24,7 +24,7 @@ class WorkoutCardRepositoryInMemoryImpl implements WorkoutCardRepository {
         shortNote: 'Très bonne session matinale.',
       ),
       WorkoutCard(
-        id: WorkoutId(Uuid()),
+        id: WorkoutId(Uuid().toString()),
         date: DateTime.now().subtract(const Duration(days: 2)),
         type: WorkoutType.grappling,
         feeling: RatingOnTen(6),
@@ -34,7 +34,7 @@ class WorkoutCardRepositoryInMemoryImpl implements WorkoutCardRepository {
         shortNote: 'Squats et deadlifts.',
       ),
       WorkoutCard(
-        id: WorkoutId(Uuid()),
+        id: WorkoutId(Uuid().toString()),
         date: DateTime.now().subtract(const Duration(days: 1)),
         type: WorkoutType.jjbGi,
         feeling: RatingOnTen(7),
@@ -44,7 +44,7 @@ class WorkoutCardRepositoryInMemoryImpl implements WorkoutCardRepository {
         shortNote: 'Très bonne session matinale.',
       ),
       WorkoutCard(
-        id: WorkoutId(Uuid()),
+        id: WorkoutId(Uuid().toString()),
         date: DateTime.now().subtract(const Duration(days: 2)),
         type: WorkoutType.grappling,
         feeling: RatingOnTen(6),
@@ -54,7 +54,7 @@ class WorkoutCardRepositoryInMemoryImpl implements WorkoutCardRepository {
         shortNote: 'Squats et deadlifts.',
       ),
       WorkoutCard(
-        id: WorkoutId(Uuid()),
+        id: WorkoutId(Uuid().toString()),
         date: DateTime.now().subtract(const Duration(days: 1)),
         type: WorkoutType.jjbGi,
         feeling: RatingOnTen(7),
@@ -64,7 +64,7 @@ class WorkoutCardRepositoryInMemoryImpl implements WorkoutCardRepository {
         shortNote: 'Très bonne session matinale.',
       ),
       WorkoutCard(
-        id: WorkoutId(Uuid()),
+        id: WorkoutId(Uuid().toString()),
         date: DateTime.now().subtract(const Duration(days: 2)),
         type: WorkoutType.grappling,
         feeling: RatingOnTen(6),

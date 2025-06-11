@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:isar/isar.dart';
 import 'package:uuid/uuid.dart';
 
 class WorkoutId extends Equatable {
-  final Uuid value;
+  final String value;
 
   const WorkoutId(this.value);
 
