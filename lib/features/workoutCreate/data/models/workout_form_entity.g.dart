@@ -37,53 +37,58 @@ const WorkoutFormEntitySchema = CollectionSchema(
       name: r'motivation',
       type: IsarType.double,
     ),
-    r'selectedCategory': PropertySchema(
+    r'note': PropertySchema(
       id: 4,
+      name: r'note',
+      type: IsarType.string,
+    ),
+    r'selectedCategory': PropertySchema(
+      id: 5,
       name: r'selectedCategory',
       type: IsarType.string,
     ),
     r'selectedDate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'selectedDate',
       type: IsarType.dateTime,
     ),
     r'selectedHour': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'selectedHour',
       type: IsarType.long,
     ),
     r'selectedMinute': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'selectedMinute',
       type: IsarType.long,
     ),
     r'selectedTechnique': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'selectedTechnique',
       type: IsarType.string,
     ),
     r'selectedTrainingTypes': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'selectedTrainingTypes',
-      type: IsarType.stringList,
+      type: IsarType.string,
     ),
     r'sleepQuality': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'sleepQuality',
       type: IsarType.double,
     ),
     r'stress': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'stress',
       type: IsarType.double,
     ),
     r'updatedAt': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'uuid': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'uuid',
       type: IsarType.string,
     )
@@ -109,6 +114,12 @@ int _workoutFormEntityEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
+    final value = object.note;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.selectedCategory;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -121,12 +132,6 @@ int _workoutFormEntityEstimateSize(
     }
   }
   bytesCount += 3 + object.selectedTrainingTypes.length * 3;
-  {
-    for (var i = 0; i < object.selectedTrainingTypes.length; i++) {
-      final value = object.selectedTrainingTypes[i];
-      bytesCount += value.length * 3;
-    }
-  }
   bytesCount += 3 + object.uuid.length * 3;
   return bytesCount;
 }
@@ -141,16 +146,17 @@ void _workoutFormEntitySerialize(
   writer.writeDouble(offsets[1], object.energy);
   writer.writeDouble(offsets[2], object.feeling);
   writer.writeDouble(offsets[3], object.motivation);
-  writer.writeString(offsets[4], object.selectedCategory);
-  writer.writeDateTime(offsets[5], object.selectedDate);
-  writer.writeLong(offsets[6], object.selectedHour);
-  writer.writeLong(offsets[7], object.selectedMinute);
-  writer.writeString(offsets[8], object.selectedTechnique);
-  writer.writeStringList(offsets[9], object.selectedTrainingTypes);
-  writer.writeDouble(offsets[10], object.sleepQuality);
-  writer.writeDouble(offsets[11], object.stress);
-  writer.writeDateTime(offsets[12], object.updatedAt);
-  writer.writeString(offsets[13], object.uuid);
+  writer.writeString(offsets[4], object.note);
+  writer.writeString(offsets[5], object.selectedCategory);
+  writer.writeDateTime(offsets[6], object.selectedDate);
+  writer.writeLong(offsets[7], object.selectedHour);
+  writer.writeLong(offsets[8], object.selectedMinute);
+  writer.writeString(offsets[9], object.selectedTechnique);
+  writer.writeString(offsets[10], object.selectedTrainingTypes);
+  writer.writeDouble(offsets[11], object.sleepQuality);
+  writer.writeDouble(offsets[12], object.stress);
+  writer.writeDateTime(offsets[13], object.updatedAt);
+  writer.writeString(offsets[14], object.uuid);
 }
 
 WorkoutFormEntity _workoutFormEntityDeserialize(
@@ -165,16 +171,17 @@ WorkoutFormEntity _workoutFormEntityDeserialize(
   object.feeling = reader.readDouble(offsets[2]);
   object.id = id;
   object.motivation = reader.readDouble(offsets[3]);
-  object.selectedCategory = reader.readStringOrNull(offsets[4]);
-  object.selectedDate = reader.readDateTime(offsets[5]);
-  object.selectedHour = reader.readLong(offsets[6]);
-  object.selectedMinute = reader.readLong(offsets[7]);
-  object.selectedTechnique = reader.readStringOrNull(offsets[8]);
-  object.selectedTrainingTypes = reader.readStringList(offsets[9]) ?? [];
-  object.sleepQuality = reader.readDouble(offsets[10]);
-  object.stress = reader.readDouble(offsets[11]);
-  object.updatedAt = reader.readDateTime(offsets[12]);
-  object.uuid = reader.readString(offsets[13]);
+  object.note = reader.readStringOrNull(offsets[4]);
+  object.selectedCategory = reader.readStringOrNull(offsets[5]);
+  object.selectedDate = reader.readDateTime(offsets[6]);
+  object.selectedHour = reader.readLong(offsets[7]);
+  object.selectedMinute = reader.readLong(offsets[8]);
+  object.selectedTechnique = reader.readStringOrNull(offsets[9]);
+  object.selectedTrainingTypes = reader.readString(offsets[10]);
+  object.sleepQuality = reader.readDouble(offsets[11]);
+  object.stress = reader.readDouble(offsets[12]);
+  object.updatedAt = reader.readDateTime(offsets[13]);
+  object.uuid = reader.readString(offsets[14]);
   return object;
 }
 
@@ -196,22 +203,24 @@ P _workoutFormEntityDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 7:
       return (reader.readLong(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 9:
-      return (reader.readStringList(offset) ?? []) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 10:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 11:
       return (reader.readDouble(offset)) as P;
     case 12:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 13:
+      return (reader.readDateTime(offset)) as P;
+    case 14:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -620,6 +629,160 @@ extension WorkoutFormEntityQueryFilter
         upper: upper,
         includeUpper: includeUpper,
         epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'note',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'note',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'note',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'note',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'note',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
+      noteIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'note',
+        value: '',
       ));
     });
   }
@@ -1101,7 +1264,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementEqualTo(
+      selectedTrainingTypesEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1115,7 +1278,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementGreaterThan(
+      selectedTrainingTypesGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1131,7 +1294,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementLessThan(
+      selectedTrainingTypesLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1147,7 +1310,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementBetween(
+      selectedTrainingTypesBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1167,7 +1330,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementStartsWith(
+      selectedTrainingTypesStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1181,7 +1344,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementEndsWith(
+      selectedTrainingTypesEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1195,8 +1358,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementContains(String value,
-          {bool caseSensitive = true}) {
+      selectedTrainingTypesContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'selectedTrainingTypes',
@@ -1207,7 +1369,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementMatches(String pattern,
+      selectedTrainingTypesMatches(String pattern,
           {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1219,7 +1381,7 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementIsEmpty() {
+      selectedTrainingTypesIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'selectedTrainingTypes',
@@ -1229,101 +1391,12 @@ extension WorkoutFormEntityQueryFilter
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesElementIsNotEmpty() {
+      selectedTrainingTypesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'selectedTrainingTypes',
         value: '',
       ));
-    });
-  }
-
-  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'selectedTrainingTypes',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'selectedTrainingTypes',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'selectedTrainingTypes',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'selectedTrainingTypes',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'selectedTrainingTypes',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterFilterCondition>
-      selectedTrainingTypesLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'selectedTrainingTypes',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
     });
   }
 
@@ -1717,6 +1790,20 @@ extension WorkoutFormEntityQuerySortBy
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      sortByNote() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      sortByNoteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
       sortBySelectedCategory() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'selectedCategory', Sort.asc);
@@ -1783,6 +1870,20 @@ extension WorkoutFormEntityQuerySortBy
       sortBySelectedTechniqueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'selectedTechnique', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      sortBySelectedTrainingTypes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedTrainingTypes', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      sortBySelectedTrainingTypesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedTrainingTypes', Sort.desc);
     });
   }
 
@@ -1915,6 +2016,20 @@ extension WorkoutFormEntityQuerySortThenBy
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      thenByNote() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      thenByNoteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
       thenBySelectedCategory() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'selectedCategory', Sort.asc);
@@ -1981,6 +2096,20 @@ extension WorkoutFormEntityQuerySortThenBy
       thenBySelectedTechniqueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'selectedTechnique', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      thenBySelectedTrainingTypes() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedTrainingTypes', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QAfterSortBy>
+      thenBySelectedTrainingTypesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedTrainingTypes', Sort.desc);
     });
   }
 
@@ -2071,6 +2200,13 @@ extension WorkoutFormEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QDistinct> distinctByNote(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'note', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QDistinct>
       distinctBySelectedCategory({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -2109,9 +2245,10 @@ extension WorkoutFormEntityQueryWhereDistinct
   }
 
   QueryBuilder<WorkoutFormEntity, WorkoutFormEntity, QDistinct>
-      distinctBySelectedTrainingTypes() {
+      distinctBySelectedTrainingTypes({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'selectedTrainingTypes');
+      return query.addDistinctBy(r'selectedTrainingTypes',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -2178,6 +2315,12 @@ extension WorkoutFormEntityQueryProperty
     });
   }
 
+  QueryBuilder<WorkoutFormEntity, String?, QQueryOperations> noteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'note');
+    });
+  }
+
   QueryBuilder<WorkoutFormEntity, String?, QQueryOperations>
       selectedCategoryProperty() {
     return QueryBuilder.apply(this, (query) {
@@ -2213,7 +2356,7 @@ extension WorkoutFormEntityQueryProperty
     });
   }
 
-  QueryBuilder<WorkoutFormEntity, List<String>, QQueryOperations>
+  QueryBuilder<WorkoutFormEntity, String, QQueryOperations>
       selectedTrainingTypesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'selectedTrainingTypes');

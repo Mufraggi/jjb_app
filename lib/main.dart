@@ -15,13 +15,15 @@ import 'package:intl/date_symbol_data_local.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dir = await getApplicationDocumentsDirectory();
-  final isar = await Isar.openSync([WorkoutFormEntitySchema], directory: dir.path);
+  final isar = await Isar.openSync([
+    WorkoutFormEntitySchema,
+  ], directory: dir.path);
   await initializeDateFormatting('fr_FR', null);
   runApp(
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider<WorkoutCardRepository>(
-          create: (_) => WorkoutCardRepositoryInMemoryImpl(),
+          create: (_) => WorkoutCardRepositoryIsarImpl(isar),
         ),
         RepositoryProvider<WorkoutRepository>(
           create: (_) => WorkoutRepositoryInMemoryImpl(),

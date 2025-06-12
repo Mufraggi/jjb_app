@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../domain/workout/TechnicCategory.dart';
+import '../../../../domain/workout/workoutType.dart';
 
 enum WorkoutFormStatus { initial, loading, success, failure }
 
@@ -26,6 +27,7 @@ class WorkoutFormBlocState extends Equatable {
   final TechniqueCategory? selectedCategory;
   final String? selectedTechnique;
   final List<bool> selectedTrainingType;
+  final String? note;
 
   const WorkoutFormBlocState({
     this.currentStep = 0,
@@ -46,7 +48,8 @@ class WorkoutFormBlocState extends Equatable {
     // TrainingStep defaults
     this.selectedCategory,
     this.selectedTechnique,
-    this.selectedTrainingType = const [true, false, false],
+    this.selectedTrainingType = const [true, false, false], // ✅ Valeur par défaut
+    this.note,
   });
 
   // Factory constructor pour créer l'état initial avec les valeurs par défaut
@@ -77,6 +80,7 @@ class WorkoutFormBlocState extends Equatable {
     TechniqueCategory? selectedCategory,
     String? selectedTechnique,
     List<bool>? selectedTrainingType,
+    String? noteWrite,
   }) {
     return WorkoutFormBlocState(
       currentStep: currentStep ?? this.currentStep,
@@ -86,15 +90,21 @@ class WorkoutFormBlocState extends Equatable {
       selectedDate: selectedDate ?? this.selectedDate,
       selectedTime: selectedTime ?? this.selectedTime,
 
-      currentFeelingSliderValue: currentFeelingSliderValue ?? this.currentFeelingSliderValue,
-      currentEnergySliderValue: currentEnergySliderValue ?? this.currentEnergySliderValue,
-      currentMotivationSliderValue: currentMotivationSliderValue ?? this.currentMotivationSliderValue,
-      currentStressSliderValue: currentStressSliderValue ?? this.currentStressSliderValue,
-      currentSleepQualitySliderValue: currentSleepQualitySliderValue ?? this.currentSleepQualitySliderValue,
+      currentFeelingSliderValue:
+          currentFeelingSliderValue ?? this.currentFeelingSliderValue,
+      currentEnergySliderValue:
+          currentEnergySliderValue ?? this.currentEnergySliderValue,
+      currentMotivationSliderValue:
+          currentMotivationSliderValue ?? this.currentMotivationSliderValue,
+      currentStressSliderValue:
+          currentStressSliderValue ?? this.currentStressSliderValue,
+      currentSleepQualitySliderValue:
+          currentSleepQualitySliderValue ?? this.currentSleepQualitySliderValue,
 
       selectedCategory: selectedCategory ?? this.selectedCategory,
       selectedTechnique: selectedTechnique ?? this.selectedTechnique,
       selectedTrainingType: selectedTrainingType ?? this.selectedTrainingType,
+      note: noteWrite ?? this.note,
     );
   }
 
@@ -113,5 +123,6 @@ class WorkoutFormBlocState extends Equatable {
     selectedCategory,
     selectedTechnique,
     selectedTrainingType,
+    note,
   ];
 }

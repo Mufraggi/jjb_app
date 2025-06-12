@@ -1,7 +1,6 @@
-// create_workout_page.dart
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:jjb_app/domain/workout/TechnicCategory.dart';
 import '../../../../domain/workout/JbbTechnic.dart';
 import '../../domain/repositoy/CreateWorkoutRepository.dart';
@@ -16,11 +15,10 @@ import '../widgets/CreateWorkoutWidget.dart';
 
 class CreateWorkoutPage extends StatefulWidget {
   @override
-  State createState() => _CreateWorkoutPageState();
+  State<CreateWorkoutPage> createState() => _CreateWorkoutPageState();
 }
 
 class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
-  // Contrôleurs de texte (inchangés)
   final _workoutNameController = TextEditingController();
   final _notesController = TextEditingController();
 
@@ -34,12 +32,10 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WorkoutFormBloc(
-        repository: context.read<CreateWorkoutRepository>(),
-      ),
+      create: (context) =>
+          WorkoutFormBloc(repository: context.read<CreateWorkoutRepository>()),
       child: BlocConsumer<WorkoutFormBloc, WorkoutFormBlocState>(
         listener: (context, state) {
-          // Gérer les messages de succès/erreur
           if (state.status == WorkoutFormStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Workout créé avec succès!')),
@@ -54,51 +50,76 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
         builder: (context, state) {
           return CreateWorkoutWidget(
             currentStep: state.currentStep,
-            // Créer un WorkoutFormState compatible avec votre widget existant
+
+            // Conversion du blocState vers le format attendu par le widget
             formState: _createCompatibleFormState(state),
             techniqueMap: techniqueMap,
-            onStepCancel: () => context.read<WorkoutFormBloc>().add(PreviousStepEvent()),
-            onStepContinue: () => context.read<WorkoutFormBloc>().add(NextStepEvent()),
-            onStepTapped: (step) => context.read<WorkoutFormBloc>().add(GoToStepEvent(step)),
-            onWhenStepUpdate: ({DateTime? selectedDate, TimeOfDay? selectedTime}) {
-              context.read<WorkoutFormBloc>().add(UpdateWhenStepEvent(
-                selectedDate: selectedDate,
-                selectedTime: selectedTime,
-              ));
-            },
-            onFeelingsStepUpdate: ({
-              double? feeling,
-              double? energy,
-              double? motivation,
-              double? stress,
-              double? sleepQuality,
-            }) {
-              context.read<WorkoutFormBloc>().add(UpdateFeelingsStepEvent(
-                currentFeelingSliderValue: feeling,
-                currentEnergySliderValue: energy,
-                currentMotivationSliderValue: motivation,
-                currentStressSliderValue: stress,
-                currentSleepQualitySliderValue: sleepQuality,
-              ));
-            },
-            onTrainingStepUpdate: ({
-              TechniqueCategory? category,
-              String? technique,
-              List<bool>? trainingType,
-            }) {
-              context.read<WorkoutFormBloc>().add(UpdateTrainingStepEvent(
-                selectedCategory: category,
-                selectedTechnique: technique,
-                selectedTrainingType: trainingType,
-              ));
-            },
+            noteController: _notesController,
+            // Navigation entre les étapes
+            onStepCancel: () =>
+                context.read<WorkoutFormBloc>().add(PreviousStepEvent()),
+            onStepContinue: () =>
+                context.read<WorkoutFormBloc>().add(NextStepEvent()),
+            onStepTapped: (step) =>
+                context.read<WorkoutFormBloc>().add(GoToStepEvent(step)),
+
+            // Mises à jour pour chaque étape du formulaire
+            onWhenStepUpdate:
+                ({DateTime? selectedDate, TimeOfDay? selectedTime}) {
+                  context.read<WorkoutFormBloc>().add(
+                    UpdateWhenStepEvent(
+                      selectedDate: selectedDate,
+                      selectedTime: selectedTime,
+                    ),
+                  );
+                },
+            onFeelingsStepUpdate:
+                ({
+                  double? feeling,
+                  double? energy,
+                  double? motivation,
+                  double? stress,
+                  double? sleepQuality,
+                }) {
+                  context.read<WorkoutFormBloc>().add(
+                    UpdateFeelingsStepEvent(
+                      currentFeelingSliderValue: feeling,
+                      currentEnergySliderValue: energy,
+                      currentMotivationSliderValue: motivation,
+                      currentStressSliderValue: stress,
+                      currentSleepQualitySliderValue: sleepQuality,
+                    ),
+                  );
+                },
+
+            // 🎯 C'est ici qu'on passe la liste booléenne pour les types d'entraînement
+            onTrainingStepUpdate:
+                ({
+                  TechniqueCategory? category,
+                  String? technique,
+                  List<bool>? trainingType,
+                  String? note,
+                }) {
+                  context.read<WorkoutFormBloc>().add(
+                    UpdateTrainingStepEvent(
+                      selectedCategory: category,
+                      selectedTechnique: technique,
+                      selectedTrainingType: trainingType,
+                      noteWrite: note,
+                    ),
+                  );
+                },
+
+            // Soumission finale du formulaire
             onCreateWorkout: () {
               final bloc = context.read<WorkoutFormBloc>();
               if (bloc.isFormValid()) {
                 bloc.add(SubmitWorkoutFormEvent());
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Veuillez remplir tous les champs requis')),
+                  const SnackBar(
+                    content: Text('Veuillez remplir tous les champs requis'),
+                  ),
                 );
               }
             },
@@ -108,7 +129,6 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
     );
   }
 
-  // Méthode pour créer un WorkoutFormState compatible avec votre widget existant
   WorkoutFormState _createCompatibleFormState(WorkoutFormBlocState blocState) {
     return WorkoutFormState(
       whenStep: WhenStepState(
@@ -120,12 +140,14 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
         currentEnergySliderValue: blocState.currentEnergySliderValue,
         currentMotivationSliderValue: blocState.currentMotivationSliderValue,
         currentStressSliderValue: blocState.currentStressSliderValue,
-        currentSleepQualitySliderValue: blocState.currentSleepQualitySliderValue,
+        currentSleepQualitySliderValue:
+            blocState.currentSleepQualitySliderValue,
       ),
       trainingStep: TrainingStepState(
         selectedCategory: blocState.selectedCategory,
         selectedTechnique: blocState.selectedTechnique,
         selectedTrainingType: blocState.selectedTrainingType,
+        note: blocState.note,
       ),
     );
   }

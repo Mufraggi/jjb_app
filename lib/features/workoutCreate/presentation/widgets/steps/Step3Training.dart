@@ -3,11 +3,19 @@ import 'package:jjb_app/domain/workout/TechnicCategory.dart';
 
 import '../../../../../domain/workout/workoutType.dart';
 
+List<WorkoutType> trainingsType = <WorkoutType>[
+  WorkoutType.grappling,
+  WorkoutType.jjbGi,
+  WorkoutType.jjbNoGi,
+];
+
 List<Widget> fruits = <Widget>[
   Text(WorkoutType.grappling.label),
   Text(WorkoutType.jjbGi.label),
   Text(WorkoutType.jjbNoGi.label),
 ];
+
+List<bool> listBool = <bool>[true, false, false];
 
 class Step3TrainingContent extends StatelessWidget {
   final TechniqueCategory? selectedCategory;
@@ -17,8 +25,11 @@ class Step3TrainingContent extends StatelessWidget {
   final Map<TechniqueCategory, List<String>>
   techniqueMap; // Passez techniqueMap en paramètre
   final List<bool> selectedWorkoutType;
-  final ValueChanged<int> onWorkoutTypeChanged; // nouvelle callback
+  final ValueChanged<int> onWorkoutTypeChanged;
   final GlobalKey<FormState> formKey;
+  final ValueChanged<String?> onNoteChanged;
+  final String? initialNote;
+  final TextEditingController noteController; // ✅ Controller passé en paramètre
 
   const Step3TrainingContent({
     Key? key,
@@ -27,9 +38,12 @@ class Step3TrainingContent extends StatelessWidget {
     required this.onCategoryChanged,
     required this.onTechniqueChanged,
     required this.techniqueMap,
+    required this.onWorkoutTypeChanged,
     required this.selectedWorkoutType,
-    required this.onWorkoutTypeChanged, // ajout ici
     required this.formKey,
+    required this.onNoteChanged,
+    required this.initialNote,
+    required this.noteController, // ✅ Controller requis
   }) : super(key: key);
 
   @override
@@ -45,24 +59,24 @@ class Step3TrainingContent extends StatelessWidget {
             children: <Widget>[
               ToggleButtons(
                 direction: Axis.horizontal,
-                //onPressed: onWorkoutTypeChanged,
-                onPressed: (int index) {
-                  var a = formKey.currentState?.validate();
-                  print(a);
-                },
+                onPressed: onWorkoutTypeChanged,
+                // ✅ Utilise directement la callback
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 selectedBorderColor: Colors.red[700],
                 selectedColor: Colors.white,
                 fillColor: Colors.red[200],
                 color: Colors.red[400],
-                constraints: const BoxConstraints(minHeight: 40.0, minWidth: 80.0),
+                constraints: const BoxConstraints(
+                  minHeight: 40.0,
+                  minWidth: 80.0,
+                ),
                 isSelected: selectedWorkoutType,
-                children: <Widget>[
-                  Text(WorkoutType.grappling.label),
-                  Text(WorkoutType.jjbGi.label),
-                  Text(WorkoutType.jjbNoGi.label),
-                ],
+                // ✅ Utilise la prop
+                children: trainingsType
+                    .map((type) => Text(type.label))
+                    .toList(),
               ),
+              const SizedBox(height: 20),
               DropdownButtonFormField<TechniqueCategory>(
                 validator: (data) {
                   if (data != null) return null;
@@ -108,9 +122,18 @@ class Step3TrainingContent extends StatelessWidget {
                           })
                           .toList(),
               ),
+              const SizedBox(height: 20),
               TextFormField(
                 focusNode: FocusNode(),
-                controller: TextEditingController(),
+                controller: noteController,
+                decoration: InputDecoration(
+                  labelText: 'Notes',
+                  hintText: 'Ajoutez vos notes ici...',
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 3,
+                onChanged: onNoteChanged,
+
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Veuillez entrer une valeur';

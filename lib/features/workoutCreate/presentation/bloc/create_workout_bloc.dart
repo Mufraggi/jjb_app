@@ -1,6 +1,7 @@
 // workout_form_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jjb_app/features/workoutCreate/domain/repositoy/CreateWorkoutRepository.dart';
+import '../../../../domain/workout/workoutType.dart';
 import '../../domain/CreateWorkout.dart';
 import 'create_workout_event.dart';
 import 'create_workout_state.dart';
@@ -108,6 +109,7 @@ class WorkoutFormBloc extends Bloc<WorkoutFormEvent, WorkoutFormBlocState> {
         selectedCategory: event.selectedCategory,
         selectedTechnique: event.selectedTechnique,
         selectedTrainingType: event.selectedTrainingType,
+        noteWrite: event.noteWrite,
       ),
     );
   }
@@ -117,7 +119,9 @@ class WorkoutFormBloc extends Bloc<WorkoutFormEvent, WorkoutFormBlocState> {
     Emitter<WorkoutFormBlocState> emit,
   ) async {
     emit(state.copyWith(status: WorkoutFormStatus.loading));
-
+    String selectedTrainingTypeString = _getSelectedTrainingType(state.selectedTrainingType);
+    print(selectedTrainingTypeString);
+    print(state.note);
     try {
       final workout = WorkoutFormData(
         selectedDate: state.selectedDate!,
@@ -129,7 +133,8 @@ class WorkoutFormBloc extends Bloc<WorkoutFormEvent, WorkoutFormBlocState> {
         currentSleepQualitySliderValue: state.currentSleepQualitySliderValue,
         selectedCategory: state.selectedCategory!,
         selectedTechnique: state.selectedTechnique!,
-        selectedTrainingType: state.selectedTrainingType,
+        selectedTrainingType: selectedTrainingTypeString,
+        note: state.note,
       );
 
       await repository.insertWorkout(workout);
@@ -144,7 +149,20 @@ class WorkoutFormBloc extends Bloc<WorkoutFormEvent, WorkoutFormBlocState> {
       );
     }
   }
+  String _getSelectedTrainingType(List<bool> selectedList) {
+    final trainingsType = [
+      WorkoutType.grappling,
+      WorkoutType.jjbGi,
+      WorkoutType.jjbNoGi,
+    ];
 
+    for (int i = 0; i < selectedList.length; i++) {
+      if (selectedList[i]) {
+        return trainingsType[i].label;
+      }
+    }
+    return trainingsType[0].label; // valeur par défaut
+  }
   // Méthodes utilitaires pour vérifier la validité de chaque étape
   bool isWhenStepValid() {
     return state.selectedDate != null && state.selectedTime != null;

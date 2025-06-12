@@ -25,18 +25,19 @@ class WorkoutFormEntity {
   late double motivation;
   late double stress;
   late double sleepQuality;
+  late String? note;
 
   // Training step
   String? selectedCategory;
   String? selectedTechnique;
-  List<String> selectedTrainingTypes = [];
+  late String selectedTrainingTypes ;
 
   WorkoutFormEntity();
 
   /// Factory helper to convert from your domain/form class
   factory WorkoutFormEntity.fromFormData(WorkoutFormData form) {
     return WorkoutFormEntity()
-      ..uuid =Uuid().v4()
+      ..uuid = Uuid().v4()
       ..createdAt = DateTime.now()
       ..updatedAt = DateTime.now()
       ..selectedDate = form.selectedDate
@@ -47,8 +48,11 @@ class WorkoutFormEntity {
       ..motivation = form.currentMotivationSliderValue
       ..stress = form.currentStressSliderValue
       ..sleepQuality = form.currentSleepQualitySliderValue
-      ..selectedCategory = form.selectedCategory?.name // ou id selon ton modèle
+      ..selectedCategory = form
+          .selectedCategory
+          ?.name // ou id selon ton modèle
       ..selectedTechnique = form.selectedTechnique
-      ..selectedTrainingTypes = form.selectedTrainingType.map((e) => e.toString()).toList();
+      ..selectedTrainingTypes = form.selectedTrainingType
+      ..note = form.note;
   }
 }

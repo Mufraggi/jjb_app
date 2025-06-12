@@ -28,10 +28,13 @@ class CreateWorkoutWidget extends StatelessWidget {
   TechniqueCategory? category,
   String? technique,
   List<bool>? trainingType,
-  }) onTrainingStepUpdate;
+  String? note
 
+  }) onTrainingStepUpdate;
   // Callback pour la création du workout
   final VoidCallback onCreateWorkout;
+  final TextEditingController noteController; // ✅ Controller passé en paramètre
+
 
   const CreateWorkoutWidget({
     Key? key,
@@ -45,6 +48,8 @@ class CreateWorkoutWidget extends StatelessWidget {
     required this.onFeelingsStepUpdate,
     required this.onTrainingStepUpdate,
     required this.onCreateWorkout,
+    required this.noteController
+
   }) : super(key: key);
 
   bool get isFirstStep => currentStep == 0;
@@ -122,20 +127,22 @@ class CreateWorkoutWidget extends StatelessWidget {
         selectedCategory: formState.trainingStep.selectedCategory,
         selectedTechnique: formState.trainingStep.selectedTechnique,
         techniqueMap: techniqueMap,
-        selectedWorkoutType: formState.trainingStep.selectedTrainingType,
+        selectedWorkoutType: formState.trainingStep.selectedTrainingType, // ✅ Maintenant List<bool>
         onCategoryChanged: (newValue) => onTrainingStepUpdate(
           category: newValue,
           technique: null, // Réinitialiser la technique
         ),
         onTechniqueChanged: (newValue) => onTrainingStepUpdate(technique: newValue),
         onWorkoutTypeChanged: (int index) {
-          List<bool> newSelection = List.from(formState.trainingStep.selectedTrainingType);
-          for (int i = 0; i < newSelection.length; i++) {
-            newSelection[i] = i == index;
-          }
+          List<bool> newSelection = List.generate(3, (i) => i == index);
+          print(newSelection);
           onTrainingStepUpdate(trainingType: newSelection);
         },
         formKey: GlobalKey<FormState>(),
+        onNoteChanged: (value) => onTrainingStepUpdate(note: value),
+        initialNote: formState.trainingStep.note,
+        noteController: noteController, // ✅ Passer le controller
+
       ),
     ),
   ];

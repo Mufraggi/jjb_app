@@ -18,7 +18,8 @@ class WorkoutFormData {
   // Champs de TrainingStepState
   final TechniqueCategory? selectedCategory;
   final String? selectedTechnique;
-  final List selectedTrainingType;
+  final String selectedTrainingType;
+  final String? note;
 
   WorkoutFormData({
     required this.selectedDate,
@@ -31,5 +32,6 @@ class WorkoutFormData {
     this.selectedCategory,
     this.selectedTechnique,
     required this.selectedTrainingType,
+    required this.note,
   });
 }

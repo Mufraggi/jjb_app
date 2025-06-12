@@ -27,6 +27,7 @@ class WorkoutFormDataEvent extends WorkoutFormEvent {
   final TechniqueCategory? selectedCategory;
   final String? selectedTechnique;
   final List<bool>? selectedTrainingType;
+  final String? note;
 
   const WorkoutFormDataEvent({
     // WhenStep fields
@@ -44,6 +45,7 @@ class WorkoutFormDataEvent extends WorkoutFormEvent {
     this.selectedCategory,
     this.selectedTechnique,
     this.selectedTrainingType,
+    this.note,
   });
 
   @override
@@ -121,11 +123,13 @@ class UpdateTrainingStepEvent extends WorkoutFormEvent {
   final TechniqueCategory? selectedCategory;
   final String? selectedTechnique;
   final List<bool>? selectedTrainingType;
+  final String? noteWrite;
 
   const UpdateTrainingStepEvent({
     this.selectedCategory,
     this.selectedTechnique,
     required this.selectedTrainingType,
+    this.noteWrite,
   });
 
   @override
@@ -133,5 +137,6 @@ class UpdateTrainingStepEvent extends WorkoutFormEvent {
     selectedCategory,
     selectedTechnique,
     selectedTrainingType,
+    noteWrite
   ];
 }
