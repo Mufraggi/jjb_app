@@ -3,13 +3,15 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../../core/domain/ratingOnTen.dart';
 import '../../../../../core/domain/trainingDuration.dart';
+import '../../../../../core/domain/trainingHour.dart';
 import '../../../../../core/domain/workoutId.brand.dart';
+import '../../../../../domain/training/TechnicCategory.dart';
 import '../../../../../domain/training/workoutType.dart';
 import '../../../trainingCreate/data/models/training_form_entity.dart';
 import '../../domain/repository/training_card_repository.dart';
 import '../../domain/trainingCard.dart';
 
-class TrainingCardRepositoryInMemoryImpl implements TrainingCardRepository {
+/*class TrainingCardRepositoryInMemoryImpl implements TrainingCardRepository {
   @override
   Future<List<TrainingCard>> getAllCards() async {
     await Future.delayed(const Duration(milliseconds: 500)); // simulate loading
@@ -77,7 +79,7 @@ class TrainingCardRepositoryInMemoryImpl implements TrainingCardRepository {
       ),
     ];
   }
-}
+}*/
 class TrainingCardRepositoryIsarImpl implements TrainingCardRepository {
   final Isar _isar;
 
@@ -91,38 +93,17 @@ class TrainingCardRepositoryIsarImpl implements TrainingCardRepository {
     return entities.map(_toDomain).toList();
   }
 
-
   TrainingCard _toDomain(TrainingFormEntity entity) {
-    print(entity.selectedCategory);
-    print(entity.selectedTrainingTypes);
-    print(entity.uuid);
-    print(entity.selectedDate);
-    print(entity.selectedTrainingTypes[0]);
-    print(entity.feeling.toInt());
-    print(entity.selectedTrainingTypes);
-    print(entity.note);
-
-
     return TrainingCard(
       id: TrainingId(entity.uuid),
       date: entity.selectedDate,
-      type: _resolveTrainingType(entity.selectedTrainingTypes[0]),
+      type: TrainingTypeExtension.fromLabel(entity.selectedTrainingTypes),
       feeling: RatingOnTen(entity.feeling.toInt()),
       focusOfTheDay: entity.selectedTechnique ?? '',
-      duration: TrainingDuration.fromMinutes(45), // à ajuster si nécessaire
-      tags: [entity.selectedTrainingTypes],
-      shortNote: entity.note ?? '', // ajouter un champ `note` si besoin
+      duration: TrainingDuration.fromMinutes(45),
+      shortNote: entity.note ?? '',
+      category: TechniqueCategoryExtension.fromLabel(entity.selectedCategory),
+      trainingHour: TrainingHour(entity.selectedHour, entity.selectedMinute),
     );
-  }
-
-  TrainingType _resolveTrainingType(String? category) {
-    switch (category?.toLowerCase()) {
-      case 'jjb gi':
-        return TrainingType.jjbGi;
-      case 'grappling':
-        return TrainingType.grappling;
-      default:
-        return TrainingType.jjbGi;
-    }
   }
 }

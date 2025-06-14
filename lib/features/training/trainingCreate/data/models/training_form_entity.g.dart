@@ -120,12 +120,7 @@ int _trainingFormEntityEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  {
-    final value = object.selectedCategory;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.selectedCategory.length * 3;
   {
     final value = object.selectedTechnique;
     if (value != null) {
@@ -173,7 +168,7 @@ TrainingFormEntity _trainingFormEntityDeserialize(
   object.id = id;
   object.motivation = reader.readDouble(offsets[3]);
   object.note = reader.readStringOrNull(offsets[4]);
-  object.selectedCategory = reader.readStringOrNull(offsets[5]);
+  object.selectedCategory = reader.readString(offsets[5]);
   object.selectedDate = reader.readDateTime(offsets[6]);
   object.selectedHour = reader.readLong(offsets[7]);
   object.selectedMinute = reader.readLong(offsets[8]);
@@ -204,7 +199,7 @@ P _trainingFormEntityDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
       return (reader.readDateTime(offset)) as P;
     case 7:
@@ -789,26 +784,8 @@ extension TrainingFormEntityQueryFilter
   }
 
   QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
-      selectedCategoryIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'selectedCategory',
-      ));
-    });
-  }
-
-  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
-      selectedCategoryIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'selectedCategory',
-      ));
-    });
-  }
-
-  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
       selectedCategoryEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -822,7 +799,7 @@ extension TrainingFormEntityQueryFilter
 
   QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
       selectedCategoryGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -838,7 +815,7 @@ extension TrainingFormEntityQueryFilter
 
   QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
       selectedCategoryLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -854,8 +831,8 @@ extension TrainingFormEntityQueryFilter
 
   QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
       selectedCategoryBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -2323,7 +2300,7 @@ extension TrainingFormEntityQueryProperty
     });
   }
 
-  QueryBuilder<TrainingFormEntity, String?, QQueryOperations>
+  QueryBuilder<TrainingFormEntity, String, QQueryOperations>
       selectedCategoryProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'selectedCategory');

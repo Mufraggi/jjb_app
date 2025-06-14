@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/trainingCard.dart';
 
-class Tags extends StatelessWidget {
+/*class Tags extends StatelessWidget {
   final TrainingCard item;
 
   const Tags({Key? key, required this.item}) : super(key: key);
@@ -37,4 +37,4 @@ class Tags extends StatelessWidget {
       ],
     );
   }
-}
+}*/

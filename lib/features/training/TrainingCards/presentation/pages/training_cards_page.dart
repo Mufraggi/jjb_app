@@ -51,8 +51,8 @@ class _TrainingCardsPageState extends State<TrainingCardsPage> {
     );
   }
 
-  void _openButtonSheetCreateTraining() {
-    showModalBottomSheet(
+  void _openButtonSheetCreateTraining() async {
+    await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       isDismissible: true,
@@ -69,6 +69,7 @@ class _TrainingCardsPageState extends State<TrainingCardsPage> {
         child: CreateTrainingPage(),
       ),
     );
+    _bloc.add(TrainingCardsRequested());
   }
 
   @override
@@ -83,16 +84,21 @@ class _TrainingCardsPageState extends State<TrainingCardsPage> {
               return const Center(child: CircularProgressIndicator());
             } else if (state is TrainingCardsLoadSuccess) {
               final cards = state.cards;
-              return ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: cards.length,
-                itemBuilder: (context, index) {
-                  final card = cards[index];
-                  return InkWell(
-                    onTap: () => this._openButtonSheet(card.id),
-                    child: CardFeedback(item: card),
-                  );
+              return RefreshIndicator(
+                onRefresh: () async {
+                  _bloc.add(TrainingCardsRequested());
                 },
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: cards.length,
+                  itemBuilder: (context, index) {
+                    final card = cards[index];
+                    return InkWell(
+                      onTap: () => _openButtonSheet(card.id),
+                      child: CardFeedback(item: card),
+                    );
+                  },
+                ),
               );
             } else {
               return const Center(child: Text('Erreur ou aucune donnée'));
