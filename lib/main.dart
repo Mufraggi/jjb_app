@@ -28,7 +28,7 @@ void main() async {
           create: (_) => TrainingCardRepositoryIsarImpl(isar),
         ),
         RepositoryProvider<TrainingRepository>(
-          create: (_) => TrainingRepositoryInMemoryImpl(),
+          create: (_) => TrainingRepositoryIsarImpl(isar),
         ),
         RepositoryProvider<CreateTrainingRepository>(
           create: (_) => CreateTrainingImpl(isar),

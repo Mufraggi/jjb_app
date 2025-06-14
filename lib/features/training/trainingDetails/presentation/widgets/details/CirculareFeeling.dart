@@ -22,8 +22,8 @@ class CircularFeeling extends StatelessWidget {
           radius: 40,
           animation: true,
           animationDuration: 1200,
-          lineWidth: 15.0,
-          percent: 0.4,
+          lineWidth: 10.0,
+          percent: rating.value/10,
           center: new Text(
             this.rating.value.toString(),
             style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),

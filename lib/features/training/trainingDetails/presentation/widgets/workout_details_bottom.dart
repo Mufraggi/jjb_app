@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jjb_app/domain/training/TechnicCategory.dart';
 import '../../domain/entities/trainingDetails.dart';
 import 'details/Feeling.dart';
 import 'details/Header.dart';
@@ -9,7 +10,8 @@ import 'details/WorkoutGoalAndNotes.dart';
 class TrainingDetailsView extends StatelessWidget {
   final TrainingDetails details;
 
-  const TrainingDetailsView({Key? key, required this.details}) : super(key: key);
+  const TrainingDetailsView({Key? key, required this.details})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,11 @@ class TrainingDetailsView extends StatelessWidget {
             visible: details.focusOfTheDay != null,
             child: Text(
               details.focusOfTheDay!,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: details.category.color,
+              ),
             ),
           ),
           Text(formattedDate),
@@ -58,7 +64,8 @@ class TrainingDetailsView extends StatelessWidget {
             energyLevel: this.details.energyLevel,
             motivationLevel: this.details.motivationLevel,
             stressLevel: this.details.stressLevel,
-            sleepQuality: this.details.sleepQuality,)
+            sleepQuality: this.details.sleepQuality,
+          ),
         ],
       ),
     );
