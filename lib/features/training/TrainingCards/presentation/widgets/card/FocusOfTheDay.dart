@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jjb_app/domain/training/TechnicCategory.dart';
 
 import '../../../domain/trainingCard.dart';
 
@@ -25,6 +26,10 @@ class FocusOfTheDay extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
+        Text(
+          item.category.label,
+          style: TextStyle(fontSize: 14, color: item.category.color),
+        ),
         Text(
           item.focusOfTheDay!,
           style: TextStyle(fontSize: 14, color: Colors.grey.shade700),

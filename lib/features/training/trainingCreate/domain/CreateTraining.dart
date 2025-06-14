@@ -16,7 +16,7 @@ class TrainingFormData {
   final double currentSleepQualitySliderValue;
 
   // Champs de TrainingStepState
-  final TechniqueCategory? selectedCategory;
+  final TechniqueCategory selectedCategory;
   final String? selectedTechnique;
   final String selectedTrainingType;
   final String? note;
@@ -29,7 +29,7 @@ class TrainingFormData {
     required this.currentMotivationSliderValue,
     required this.currentStressSliderValue,
     required this.currentSleepQualitySliderValue,
-    this.selectedCategory,
+    required this.selectedCategory,
     this.selectedTechnique,
     required this.selectedTrainingType,
     required this.note,

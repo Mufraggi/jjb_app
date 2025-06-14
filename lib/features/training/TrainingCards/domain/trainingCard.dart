@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:equatable/equatable.dart';
+import 'package:jjb_app/domain/training/TechnicCategory.dart';
 
 import '../../../../core/domain/ratingOnTen.dart';
 import '../../../../core/domain/trainingDuration.dart';
+import '../../../../core/domain/trainingHour.dart';
 import '../../../../core/domain/workoutId.brand.dart';
 import '../../../../domain/training/workoutType.dart';
 
@@ -12,7 +16,11 @@ class TrainingCard extends Equatable {
   final RatingOnTen feeling;
   final String? focusOfTheDay;
   final TrainingDuration duration;
-  final List<String> tags;
+  final TechniqueCategory category;
+  final TrainingHour trainingHour;
+
+
+
   final String? shortNote;
 
   const TrainingCard({
@@ -22,8 +30,9 @@ class TrainingCard extends Equatable {
     required this.feeling,
     this.focusOfTheDay,
     required this.duration,
-    required this.tags,
+    required this.category,
     this.shortNote,
+    required this.trainingHour
   });
 
   @override
@@ -34,7 +43,8 @@ class TrainingCard extends Equatable {
     feeling,
     focusOfTheDay,
     duration,
-    tags,
+    category,
     shortNote,
+    trainingHour
   ];
 }

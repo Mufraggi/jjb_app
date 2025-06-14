@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:jjb_app/domain/training/TechnicCategory.dart';
 import 'package:uuid/uuid.dart';
 import '../../domain/CreateTraining.dart';
 
@@ -26,7 +27,7 @@ class TrainingFormEntity {
   late String? note;
 
   // Training step
-  String? selectedCategory;
+  late String selectedCategory;
   String? selectedTechnique;
   late String selectedTrainingTypes ;
 
@@ -48,7 +49,7 @@ class TrainingFormEntity {
       ..sleepQuality = form.currentSleepQualitySliderValue
       ..selectedCategory = form
           .selectedCategory
-          ?.name // ou id selon ton modèle
+          .label // ou id selon ton modèle
       ..selectedTechnique = form.selectedTechnique
       ..selectedTrainingTypes = form.selectedTrainingType
       ..note = form.note;

@@ -8,7 +8,7 @@ import 'card/Duration.dart';
 import 'card/FocusOfTheDay.dart';
 import 'card/Header.dart';
 import 'card/ShortNote.dart';
-import 'card/Tags.dart';
+//import 'card/Tags.dart';
 
 class CardFeedback extends StatelessWidget {
   final TrainingCard item;
@@ -43,7 +43,7 @@ class CardFeedback extends StatelessWidget {
             FocusOfTheDay(item: item),
             DurationTraining(item: item),
             ShortNote(item: item),
-            Tags(item: item),
+          //  Tags(item: item),
           ],
         ),
       ),

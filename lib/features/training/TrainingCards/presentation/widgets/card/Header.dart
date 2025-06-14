@@ -12,7 +12,7 @@ class CardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat('MMMM d').format(item.date);
+    final formattedDate = item.trainingHour.toString() + " " +  DateFormat('MMMM d').format(item.date);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,7 +22,7 @@ class CardHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: Colors.grey.shade700,
+            color: Colors.black,
           ),
         ),
         // Badge personnalisé au lieu de Chip
