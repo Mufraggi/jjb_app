@@ -94,10 +94,6 @@ class TrainingCardRepositoryIsarImpl implements TrainingCardRepository {
   }
 
   TrainingCard _toDomain(TrainingFormEntity entity) {
-    print(entity.selectedCategory);
-    print(TechniqueCategoryExtension.fromLabel(entity.selectedCategory));
-    print("aaaa");
-
     return TrainingCard(
       id: TrainingId(entity.uuid),
       date: entity.selectedDate,
