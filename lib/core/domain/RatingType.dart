@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum RatingType { feeling, energyLevel, motivationLevel, stressLevel, sleepQuality }
 
-extension WorkoutTypeExtension on RatingType {
+extension TrainingTypeExtension on RatingType {
   String get label {
     switch (this) {
       case RatingType.feeling:

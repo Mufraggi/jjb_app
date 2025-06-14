@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:isar/isar.dart';
-import 'package:jjb_app/features/workoutDetails/domain/repository/workout_details_repository.dart';
-import 'package:path_provider/path_provider.dart';
-import 'features/workoutCards/data/repository/workout_card_repository_impl.dart';
-import 'features/workoutCards/domain/repository/workout_card_repository.dart';
-import 'features/workoutCards/presentation/pages/workout_cards_page.dart';
-import 'features/workoutCreate/data/models/workout_form_entity.dart';
-import 'features/workoutCreate/data/repository/CreateWorkoutRepositoryImpl.dart';
-import 'features/workoutCreate/domain/repositoy/CreateWorkoutRepository.dart';
-import 'features/workoutDetails/data/repository/workout_details_repository_impl.dart';
+
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'features/training/TrainingCards/data/repository/training_card_repository_impl.dart';
+import 'features/training/TrainingCards/domain/repository/training_card_repository.dart';
+import 'features/training/TrainingCards/presentation/pages/training_cards_page.dart';
+import 'features/training/trainingCreate/data/models/training_form_entity.dart';
+import 'features/training/trainingCreate/data/repository/CreateTrainingRepositoryImpl.dart';
+import 'features/training/trainingCreate/domain/repositoy/CreateWorkoutRepository.dart';
+import 'features/training/trainingDetails/data/repository/training_details_repository_impl.dart';
+import 'features/training/trainingDetails/domain/repository/training_details_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dir = await getApplicationDocumentsDirectory();
   final isar = await Isar.openSync([
-    WorkoutFormEntitySchema,
+    TrainingFormEntitySchema,
   ], directory: dir.path);
   await initializeDateFormatting('fr_FR', null);
   runApp(
     MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<WorkoutCardRepository>(
-          create: (_) => WorkoutCardRepositoryIsarImpl(isar),
+        RepositoryProvider<TrainingCardRepository>(
+          create: (_) => TrainingCardRepositoryIsarImpl(isar),
         ),
-        RepositoryProvider<WorkoutRepository>(
-          create: (_) => WorkoutRepositoryInMemoryImpl(),
+        RepositoryProvider<TrainingRepository>(
+          create: (_) => TrainingRepositoryInMemoryImpl(),
         ),
-        RepositoryProvider<CreateWorkoutRepository>(
-          create: (_) => CreateWorkoutImpl(isar),
+        RepositoryProvider<CreateTrainingRepository>(
+          create: (_) => CreateTrainingImpl(isar),
         ),
       ],
       child: const MyApp(),
@@ -55,7 +57,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),*/
-      home: WorkoutCardsPage(),
+      home: TrainingCardsPage(),
       debugShowCheckedModeBanner: false,
     );
   }

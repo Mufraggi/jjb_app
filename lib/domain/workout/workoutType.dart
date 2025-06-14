@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 
-enum WorkoutType { jjbGi, jjbNoGi, grappling }
+enum TrainingType { jjbGi, jjbNoGi, grappling }
 
-extension WorkoutTypeExtension on WorkoutType {
+extension TrainingTypeExtension on TrainingType {
   String get label {
     switch (this) {
-      case WorkoutType.jjbGi:
+      case TrainingType.jjbGi:
         return 'JJB GI';
-      case WorkoutType.jjbNoGi:
+      case TrainingType.jjbNoGi:
         return 'JJB NO GI';
-      case WorkoutType.grappling:
+      case TrainingType.grappling:
         return 'GRAPPLING';
     }
   }
 
-  static WorkoutType fromLabel(String label) {
+  static TrainingType fromLabel(String label) {
     switch (label) {
       case 'JJB GI':
-        return WorkoutType.jjbGi;
+        return TrainingType.jjbGi;
       case 'JJB NO GI':
-        return WorkoutType.jjbNoGi;
+        return TrainingType.jjbNoGi;
       case 'GRAPPLING':
-        return WorkoutType.grappling;
+        return TrainingType.grappling;
       default:
-        throw ArgumentError('Invalid workout type label: $label');
+        throw ArgumentError('Invalid training type label: $label');
     }
   }
   Color getTypeBorderColor() {

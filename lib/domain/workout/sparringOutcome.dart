@@ -25,7 +25,7 @@ extension SparringOutcomeExtension on SparringOutcome {
       case 'UNKNOW':
         return SparringOutcome.unknown;
       default:
-        throw ArgumentError('Invalid workout type label: $label');
+        throw ArgumentError('Invalid training type label: $label');
     }
   }
 }

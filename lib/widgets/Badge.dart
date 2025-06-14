@@ -1,12 +1,13 @@
 // Widget Badge
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jjb_app/domain/workout/workoutType.dart';
 
-class WorkoutBadge extends StatelessWidget {
-  final WorkoutType type;
+import '../domain/workout/workoutType.dart';
 
-  const WorkoutBadge({Key? key, required this.type}) : super(key: key);
+class TrainingBadge extends StatelessWidget {
+  final TrainingType type;
+
+  const TrainingBadge({Key? key, required this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
