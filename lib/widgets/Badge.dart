@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../domain/workout/workoutType.dart';
+import '../domain/training/workoutType.dart';
 
 class TrainingBadge extends StatelessWidget {
   final TrainingType type;

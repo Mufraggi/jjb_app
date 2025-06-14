@@ -1,6 +1,6 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:jjb_app/domain/workout/sparringOutcome.dart';
+import 'package:jjb_app/domain/training/sparringOutcome.dart';
 
 
 

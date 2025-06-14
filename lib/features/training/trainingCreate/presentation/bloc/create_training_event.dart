@@ -1,7 +1,7 @@
 // training_form_event.dart
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../../domain/workout/TechnicCategory.dart';
+import '../../../../../domain/training/TechnicCategory.dart';
 
 abstract class TrainingFormEvent extends Equatable {
   const TrainingFormEvent();

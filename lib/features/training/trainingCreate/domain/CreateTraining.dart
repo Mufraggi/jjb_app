@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/workout/TechnicCategory.dart';
+import '../../../../domain/training/TechnicCategory.dart';
 
 
 class TrainingFormData {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../domain/workout/TechnicCategory.dart';
-import '../../../../../../domain/workout/workoutType.dart';
+import '../../../../../../domain/training/TechnicCategory.dart';
+import '../../../../../../domain/training/workoutType.dart';
 
 List<TrainingType> trainingsType = <TrainingType>[
   TrainingType.grappling,

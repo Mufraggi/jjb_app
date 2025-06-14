@@ -1,5 +1,5 @@
 
-import '../../../../../domain/workout/TechnicCategory.dart';
+import '../../../../../domain/training/TechnicCategory.dart';
 
 class TrainingStepState {
   TechniqueCategory? selectedCategory;

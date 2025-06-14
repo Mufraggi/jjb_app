@@ -1,7 +1,7 @@
 // training_form_state.dart
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../../domain/workout/TechnicCategory.dart';
+import '../../../../../domain/training/TechnicCategory.dart';
 
 enum TrainingFormStatus { initial, loading, success, failure }
 

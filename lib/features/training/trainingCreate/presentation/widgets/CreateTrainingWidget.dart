@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../../../domain/workout/TechnicCategory.dart';
+import '../../../../../domain/training/TechnicCategory.dart';
 import '../state/TrainingFormState.dart';
 import 'steps/Step1When.dart';
 import 'steps/Step2Feeling.dart';

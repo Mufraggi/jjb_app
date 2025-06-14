@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/domain/trainingDuration.dart';
-import '../../../../../../domain/workout/workoutType.dart';
+import '../../../../../../domain/training/workoutType.dart';
 import '../../../../../../widgets/Badge.dart';
 
 class HeaderDetails extends StatelessWidget {

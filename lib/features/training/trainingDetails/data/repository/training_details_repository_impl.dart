@@ -1,7 +1,7 @@
 import 'package:jjb_app/core/domain/trainingDuration.dart';
 import '../../../../../core/domain/ratingOnTen.dart';
 import '../../../../../core/domain/workoutId.brand.dart';
-import '../../../../../domain/workout/workoutType.dart';
+import '../../../../../domain/training/workoutType.dart';
 import '../../domain/entities/trainingDetails.dart';
 import '../../domain/repository/training_details_repository.dart';
 

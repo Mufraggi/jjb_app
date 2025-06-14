@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/workout/JbbTechnic.dart';
-import '../../../../../domain/workout/TechnicCategory.dart';
+import '../../../../../domain/training/JbbTechnic.dart';
+import '../../../../../domain/training/TechnicCategory.dart';
 import '../../domain/repositoy/CreateWorkoutRepository.dart';
 import '../bloc/create_training_bloc.dart';
 import '../bloc/create_training_event.dart';

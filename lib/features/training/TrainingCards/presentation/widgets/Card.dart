@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jjb_app/domain/workout/workoutType.dart';
+import 'package:jjb_app/domain/training/workoutType.dart';
 
 
 import '../../domain/trainingCard.dart';

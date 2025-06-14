@@ -4,8 +4,8 @@ import 'package:jjb_app/core/domain/trainingDuration.dart';
 
 import '../../../../../core/domain/workoutId.brand.dart';
 
-import '../../../../../domain/workout/sparingRound.dart';
-import '../../../../../domain/workout/workoutType.dart';
+import '../../../../../domain/training/sparingRound.dart';
+import '../../../../../domain/training/workoutType.dart';
 
 class TrainingDetails extends Equatable {
   final TrainingId id;

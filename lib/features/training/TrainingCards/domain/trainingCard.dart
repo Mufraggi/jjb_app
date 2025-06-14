@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../../core/domain/ratingOnTen.dart';
 import '../../../../core/domain/trainingDuration.dart';
 import '../../../../core/domain/workoutId.brand.dart';
-import '../../../../domain/workout/workoutType.dart';
+import '../../../../domain/training/workoutType.dart';
 
 class TrainingCard extends Equatable {
   final TrainingId id;

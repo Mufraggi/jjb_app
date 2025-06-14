@@ -1,6 +1,6 @@
 // training_form_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../domain/workout/workoutType.dart';
+import '../../../../../domain/training/workoutType.dart';
 import '../../domain/CreateTraining.dart';
 import '../../domain/repositoy/CreateWorkoutRepository.dart';
 import 'create_training_event.dart';
