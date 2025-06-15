@@ -48,13 +48,11 @@ class TrainingRepositoryIsarImpl implements TrainingRepository {
     if (entity == null) {
       throw Exception('No training found with id: $id');
     }
-
     return TrainingDetails(
       id: id,
       type: TrainingTypeExtension.fromLabel(entity.selectedTrainingTypes),
       date: entity.selectedDate,
       duration: TrainingDuration.fromMinutes(60),
-      // valeur par défaut ?
       trainingHour: TrainingHour(entity.selectedHour, entity.selectedMinute),
       category: TechniqueCategoryExtension.fromLabel(entity.selectedCategory),
       feeling: RatingOnTen(entity.feeling.round()),
@@ -63,7 +61,6 @@ class TrainingRepositoryIsarImpl implements TrainingRepository {
       stressLevel: RatingOnTen(entity.stress.round()),
       sleepQuality: RatingOnTen(entity.sleepQuality.round()),
       focusOfTheDay: entity.selectedTechnique,
-      //todo le rajouter
       achievedGoal: true,
       notes: entity.note,
     );

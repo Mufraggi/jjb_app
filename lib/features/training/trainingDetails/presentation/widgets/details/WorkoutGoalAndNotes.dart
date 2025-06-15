@@ -39,7 +39,7 @@ class TrainingGoalAndNotes extends StatelessWidget {
               ),
               Visibility(
                 visible: this.notes != null,
-                child: Text(this.notes!, style: TextStyle(fontSize: 16)),
+                child: Text(notes ?? '', style: TextStyle(fontSize: 16)),
               ),
             ],
           ),
