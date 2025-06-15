@@ -15,6 +15,7 @@ class TrainingFormDataEvent extends TrainingFormEvent {
   // Données de WhenStep
   final DateTime? selectedDate;
   final TimeOfDay? selectedTime;
+  final Duration? selectedDuration;
 
   // Données de FeelingsStep
   final double? currentFeelingSliderValue;
@@ -33,6 +34,7 @@ class TrainingFormDataEvent extends TrainingFormEvent {
     // WhenStep fields
     this.selectedDate,
     this.selectedTime,
+    this.selectedDuration,
 
     // FeelingsStep fields
     this.currentFeelingSliderValue,
@@ -84,14 +86,16 @@ class SubmitTrainingFormEvent extends TrainingFormEvent {}
 class UpdateWhenStepEvent extends TrainingFormEvent {
   final DateTime? selectedDate;
   final TimeOfDay? selectedTime;
+  final Duration? selectedDuration;
 
   const UpdateWhenStepEvent({
     this.selectedDate,
     this.selectedTime,
+    this.selectedDuration,
   });
 
   @override
-  List<Object?> get props => [selectedDate, selectedTime];
+  List<Object?> get props => [selectedDate, selectedTime, this.selectedDuration];
 }
 
 class UpdateFeelingsStepEvent extends TrainingFormEvent {
@@ -137,6 +141,6 @@ class UpdateTrainingStepEvent extends TrainingFormEvent {
     selectedCategory,
     selectedTechnique,
     selectedTrainingType,
-    noteWrite
+    noteWrite,
   ];
 }

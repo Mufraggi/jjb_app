@@ -53,43 +53,48 @@ const TrainingFormEntitySchema = CollectionSchema(
       name: r'selectedDate',
       type: IsarType.dateTime,
     ),
-    r'selectedHour': PropertySchema(
+    r'selectedDuration': PropertySchema(
       id: 7,
+      name: r'selectedDuration',
+      type: IsarType.long,
+    ),
+    r'selectedHour': PropertySchema(
+      id: 8,
       name: r'selectedHour',
       type: IsarType.long,
     ),
     r'selectedMinute': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'selectedMinute',
       type: IsarType.long,
     ),
     r'selectedTechnique': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'selectedTechnique',
       type: IsarType.string,
     ),
     r'selectedTrainingTypes': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'selectedTrainingTypes',
       type: IsarType.string,
     ),
     r'sleepQuality': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'sleepQuality',
       type: IsarType.double,
     ),
     r'stress': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'stress',
       type: IsarType.double,
     ),
     r'updatedAt': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'uuid': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'uuid',
       type: IsarType.string,
     )
@@ -145,14 +150,15 @@ void _trainingFormEntitySerialize(
   writer.writeString(offsets[4], object.note);
   writer.writeString(offsets[5], object.selectedCategory);
   writer.writeDateTime(offsets[6], object.selectedDate);
-  writer.writeLong(offsets[7], object.selectedHour);
-  writer.writeLong(offsets[8], object.selectedMinute);
-  writer.writeString(offsets[9], object.selectedTechnique);
-  writer.writeString(offsets[10], object.selectedTrainingTypes);
-  writer.writeDouble(offsets[11], object.sleepQuality);
-  writer.writeDouble(offsets[12], object.stress);
-  writer.writeDateTime(offsets[13], object.updatedAt);
-  writer.writeString(offsets[14], object.uuid);
+  writer.writeLong(offsets[7], object.selectedDuration);
+  writer.writeLong(offsets[8], object.selectedHour);
+  writer.writeLong(offsets[9], object.selectedMinute);
+  writer.writeString(offsets[10], object.selectedTechnique);
+  writer.writeString(offsets[11], object.selectedTrainingTypes);
+  writer.writeDouble(offsets[12], object.sleepQuality);
+  writer.writeDouble(offsets[13], object.stress);
+  writer.writeDateTime(offsets[14], object.updatedAt);
+  writer.writeString(offsets[15], object.uuid);
 }
 
 TrainingFormEntity _trainingFormEntityDeserialize(
@@ -170,14 +176,15 @@ TrainingFormEntity _trainingFormEntityDeserialize(
   object.note = reader.readStringOrNull(offsets[4]);
   object.selectedCategory = reader.readString(offsets[5]);
   object.selectedDate = reader.readDateTime(offsets[6]);
-  object.selectedHour = reader.readLong(offsets[7]);
-  object.selectedMinute = reader.readLong(offsets[8]);
-  object.selectedTechnique = reader.readStringOrNull(offsets[9]);
-  object.selectedTrainingTypes = reader.readString(offsets[10]);
-  object.sleepQuality = reader.readDouble(offsets[11]);
-  object.stress = reader.readDouble(offsets[12]);
-  object.updatedAt = reader.readDateTime(offsets[13]);
-  object.uuid = reader.readString(offsets[14]);
+  object.selectedDuration = reader.readLong(offsets[7]);
+  object.selectedHour = reader.readLong(offsets[8]);
+  object.selectedMinute = reader.readLong(offsets[9]);
+  object.selectedTechnique = reader.readStringOrNull(offsets[10]);
+  object.selectedTrainingTypes = reader.readString(offsets[11]);
+  object.sleepQuality = reader.readDouble(offsets[12]);
+  object.stress = reader.readDouble(offsets[13]);
+  object.updatedAt = reader.readDateTime(offsets[14]);
+  object.uuid = reader.readString(offsets[15]);
   return object;
 }
 
@@ -207,16 +214,18 @@ P _trainingFormEntityDeserializeProp<P>(
     case 8:
       return (reader.readLong(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 10:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 11:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 12:
       return (reader.readDouble(offset)) as P;
     case 13:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 14:
+      return (reader.readDateTime(offset)) as P;
+    case 15:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -967,6 +976,62 @@ extension TrainingFormEntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'selectedDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
+      selectedDurationEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'selectedDuration',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
+      selectedDurationGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'selectedDuration',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
+      selectedDurationLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'selectedDuration',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterFilterCondition>
+      selectedDurationBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'selectedDuration',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1810,6 +1875,20 @@ extension TrainingFormEntityQuerySortBy
   }
 
   QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterSortBy>
+      sortBySelectedDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedDuration', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterSortBy>
+      sortBySelectedDurationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedDuration', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterSortBy>
       sortBySelectedHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'selectedHour', Sort.asc);
@@ -2037,6 +2116,20 @@ extension TrainingFormEntityQuerySortThenBy
   }
 
   QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterSortBy>
+      thenBySelectedDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedDuration', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterSortBy>
+      thenBySelectedDurationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'selectedDuration', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QAfterSortBy>
       thenBySelectedHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'selectedHour', Sort.asc);
@@ -2202,6 +2295,13 @@ extension TrainingFormEntityQueryWhereDistinct
   }
 
   QueryBuilder<TrainingFormEntity, TrainingFormEntity, QDistinct>
+      distinctBySelectedDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'selectedDuration');
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, TrainingFormEntity, QDistinct>
       distinctBySelectedHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'selectedHour');
@@ -2311,6 +2411,13 @@ extension TrainingFormEntityQueryProperty
       selectedDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'selectedDate');
+    });
+  }
+
+  QueryBuilder<TrainingFormEntity, int, QQueryOperations>
+      selectedDurationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'selectedDuration');
     });
   }
 

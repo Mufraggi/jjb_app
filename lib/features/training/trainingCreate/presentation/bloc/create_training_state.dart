@@ -14,6 +14,7 @@ class TrainingFormBlocState extends Equatable {
   // WhenStep data
   final DateTime? selectedDate;
   final TimeOfDay? selectedTime;
+  final Duration? selectedDuration;
 
   // FeelingsStep data
   final double currentFeelingSliderValue;
@@ -36,6 +37,7 @@ class TrainingFormBlocState extends Equatable {
     // WhenStep defaults
     this.selectedDate,
     this.selectedTime,
+    this.selectedDuration,
 
     // FeelingsStep defaults
     this.currentFeelingSliderValue = 5,
@@ -67,6 +69,7 @@ class TrainingFormBlocState extends Equatable {
     // WhenStep fields
     DateTime? selectedDate,
     TimeOfDay? selectedTime,
+    Duration? selectedDuration,
 
     // FeelingsStep fields
     double? currentFeelingSliderValue,
@@ -88,6 +91,7 @@ class TrainingFormBlocState extends Equatable {
 
       selectedDate: selectedDate ?? this.selectedDate,
       selectedTime: selectedTime ?? this.selectedTime,
+      selectedDuration: selectedDuration ?? this.selectedDuration,
 
       currentFeelingSliderValue:
           currentFeelingSliderValue ?? this.currentFeelingSliderValue,
@@ -114,6 +118,7 @@ class TrainingFormBlocState extends Equatable {
     errorMessage,
     selectedDate,
     selectedTime,
+    selectedDuration,
     currentFeelingSliderValue,
     currentEnergySliderValue,
     currentMotivationSliderValue,

@@ -1,4 +1,3 @@
-// training_form_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../domain/training/workoutType.dart';
 import '../../domain/CreateTraining.dart';
@@ -11,7 +10,7 @@ class TrainingFormBloc extends Bloc<TrainingFormEvent, TrainingFormBlocState> {
   static const int maxSteps = 3;
 
   TrainingFormBloc({required this.repository})
-    : super(TrainingFormBlocState.initial()) {
+      : super(TrainingFormBlocState.initial()) {
     // Navigation entre les étapes
     on<NextStepEvent>(_onNextStep);
     on<PreviousStepEvent>(_onPreviousStep);
@@ -34,9 +33,9 @@ class TrainingFormBloc extends Bloc<TrainingFormEvent, TrainingFormBlocState> {
   }
 
   void _onPreviousStep(
-    PreviousStepEvent event,
-    Emitter<TrainingFormBlocState> emit,
-  ) {
+      PreviousStepEvent event,
+      Emitter<TrainingFormBlocState> emit,
+      ) {
     if (state.currentStep > 0) {
       emit(state.copyWith(currentStep: state.currentStep - 1));
     }
@@ -49,14 +48,15 @@ class TrainingFormBloc extends Bloc<TrainingFormEvent, TrainingFormBlocState> {
   }
 
   void _onTrainingFormDataUpdate(
-    TrainingFormDataEvent event,
-    Emitter<TrainingFormBlocState> emit,
-  ) {
+      TrainingFormDataEvent event,
+      Emitter<TrainingFormBlocState> emit,
+      ) {
     emit(
       state.copyWith(
         // WhenStep updates
         selectedDate: event.selectedDate,
         selectedTime: event.selectedTime,
+        selectedDuration: event.selectedDuration,
 
         // FeelingsStep updates
         currentFeelingSliderValue: event.currentFeelingSliderValue,
@@ -74,21 +74,22 @@ class TrainingFormBloc extends Bloc<TrainingFormEvent, TrainingFormBlocState> {
   }
 
   void _onUpdateWhenStep(
-    UpdateWhenStepEvent event,
-    Emitter<TrainingFormBlocState> emit,
-  ) {
+      UpdateWhenStepEvent event,
+      Emitter<TrainingFormBlocState> emit,
+      ) {
     emit(
       state.copyWith(
         selectedDate: event.selectedDate,
         selectedTime: event.selectedTime,
+        selectedDuration: event.selectedDuration, // **👈 Add this line**
       ),
     );
   }
 
   void _onUpdateFeelingsStep(
-    UpdateFeelingsStepEvent event,
-    Emitter<TrainingFormBlocState> emit,
-  ) {
+      UpdateFeelingsStepEvent event,
+      Emitter<TrainingFormBlocState> emit,
+      ) {
     emit(
       state.copyWith(
         currentFeelingSliderValue: event.currentFeelingSliderValue,
@@ -101,9 +102,9 @@ class TrainingFormBloc extends Bloc<TrainingFormEvent, TrainingFormBlocState> {
   }
 
   void _onUpdateTrainingStep(
-    UpdateTrainingStepEvent event,
-    Emitter<TrainingFormBlocState> emit,
-  ) {
+      UpdateTrainingStepEvent event,
+      Emitter<TrainingFormBlocState> emit,
+      ) {
     emit(
       state.copyWith(
         selectedCategory: event.selectedCategory,
@@ -115,9 +116,9 @@ class TrainingFormBloc extends Bloc<TrainingFormEvent, TrainingFormBlocState> {
   }
 
   Future<void> _onSubmitTrainingForm(
-    SubmitTrainingFormEvent event,
-    Emitter<TrainingFormBlocState> emit,
-  ) async {
+      SubmitTrainingFormEvent event,
+      Emitter<TrainingFormBlocState> emit,
+      ) async {
     emit(state.copyWith(status: TrainingFormStatus.loading));
     String selectedTrainingTypeString = _getSelectedTrainingType(state.selectedTrainingType);
     print(selectedTrainingTypeString);
@@ -126,6 +127,7 @@ class TrainingFormBloc extends Bloc<TrainingFormEvent, TrainingFormBlocState> {
       final training = TrainingFormData(
         selectedDate: state.selectedDate!,
         selectedTime: state.selectedTime!,
+        selectedDuration: state.selectedDuration!,
         currentFeelingSliderValue: state.currentFeelingSliderValue,
         currentEnergySliderValue: state.currentEnergySliderValue,
         currentMotivationSliderValue: state.currentMotivationSliderValue,

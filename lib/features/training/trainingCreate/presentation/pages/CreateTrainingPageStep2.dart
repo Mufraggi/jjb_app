@@ -32,8 +32,9 @@ class _CreateTrainingPageState extends State<CreateTrainingPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          TrainingFormBloc(repository: context.read<CreateTrainingRepository>()),
+      create: (context) => TrainingFormBloc(
+        repository: context.read<CreateTrainingRepository>(),
+      ),
       child: BlocConsumer<TrainingFormBloc, TrainingFormBlocState>(
         listener: (context, state) {
           if (state.status == TrainingFormStatus.success) {
@@ -65,11 +66,16 @@ class _CreateTrainingPageState extends State<CreateTrainingPage> {
 
             // Mises à jour pour chaque étape du formulaire
             onWhenStepUpdate:
-                ({DateTime? selectedDate, TimeOfDay? selectedTime}) {
+                ({
+                  DateTime? selectedDate,
+                  TimeOfDay? selectedTime,
+                  Duration? selectedDuration,
+                }) {
                   context.read<TrainingFormBloc>().add(
                     UpdateWhenStepEvent(
                       selectedDate: selectedDate,
                       selectedTime: selectedTime,
+                      selectedDuration: selectedDuration,
                     ),
                   );
                 },
@@ -129,11 +135,14 @@ class _CreateTrainingPageState extends State<CreateTrainingPage> {
     );
   }
 
-  TrainingFormState _createCompatibleFormState(TrainingFormBlocState blocState) {
+  TrainingFormState _createCompatibleFormState(
+    TrainingFormBlocState blocState,
+  ) {
     return TrainingFormState(
       whenStep: WhenStepState(
         selectedDate: blocState.selectedDate,
         selectedTime: blocState.selectedTime,
+        selectedDuration: blocState.selectedDuration,
       ),
       feelingsStep: FeelingsStepState(
         currentFeelingSliderValue: blocState.currentFeelingSliderValue,

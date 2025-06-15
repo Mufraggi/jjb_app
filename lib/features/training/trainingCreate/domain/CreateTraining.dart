@@ -7,6 +7,7 @@ class TrainingFormData {
   // Champs de WhenStepState
   final DateTime selectedDate;
   final TimeOfDay selectedTime;
+  final Duration selectedDuration;
 
   // Champs de FeelingsStepState
   final double currentFeelingSliderValue;
@@ -33,5 +34,6 @@ class TrainingFormData {
     this.selectedTechnique,
     required this.selectedTrainingType,
     required this.note,
+    required this.selectedDuration,
   });
 }

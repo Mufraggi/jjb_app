@@ -16,7 +16,7 @@ class CreateTrainingWidget extends StatelessWidget {
   final VoidCallback? onStepContinue;
   final Function(int) onStepTapped;
 
-  final Function({DateTime? selectedDate, TimeOfDay? selectedTime}) onWhenStepUpdate;
+  final Function({DateTime? selectedDate, TimeOfDay? selectedTime, Duration? selectedDuration}) onWhenStepUpdate;
   final Function({
   double? feeling,
   double? energy,
@@ -98,8 +98,10 @@ class CreateTrainingWidget extends StatelessWidget {
       content: Step1WhenContent(
         selectedDate: formState.whenStep.selectedDate,
         selectedTime: formState.whenStep.selectedTime,
+        selectedDuration: formState.whenStep.selectedDuration.inMinutes.toDouble(),
         onDateChanged: (newDate) => onWhenStepUpdate(selectedDate: newDate),
         onTimeChanged: (newTime) => onWhenStepUpdate(selectedTime: newTime),
+        onDurationChanged: (duration) => onWhenStepUpdate(selectedDuration: Duration(minutes: duration.toInt())),
       ),
     ),
     Step(

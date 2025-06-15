@@ -13,10 +13,12 @@ class TrainingFormEntity {
   late DateTime createdAt;
   late DateTime updatedAt;
 
+
   // When step
   late DateTime selectedDate;
   late int selectedHour;
   late int selectedMinute;
+  late int selectedDuration;
 
   // Feelings step
   late double feeling;
@@ -42,6 +44,7 @@ class TrainingFormEntity {
       ..selectedDate = form.selectedDate
       ..selectedHour = form.selectedTime.hour
       ..selectedMinute = form.selectedTime.minute
+      ..selectedDuration = form.selectedDuration.inMinutes
       ..feeling = form.currentFeelingSliderValue
       ..energy = form.currentEnergySliderValue
       ..motivation = form.currentMotivationSliderValue
